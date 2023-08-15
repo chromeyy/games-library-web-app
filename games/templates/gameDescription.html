@@ -8,23 +8,26 @@
     />
 </head>
 <body>
-
-      <header id="header">
-              <h1>CS235 2023: My Game Library</h1>
-              <div class="copyright">&copy; UPI1 | UPI2 | UPI3 (Write your full names or UPIs)</div>
-            </header>
-            <div id="container">
-              <main id="main">
+    {% include 'navigationBar.html' %}
+    <div id="content">
+        <header id="header">
+            <h1>CS235 2023: My Game Library</h1>
+            <div class="copyright">&copy; UPI1 | UPI2 | UPI3 (Write your full names or UPIs)</div>
+        </header>
+        <div id="container">
+            <main id="main">
                 <div class="description">
-                  <br>
+                    <br>
                     <h2>{{ game.title }}</h2>
                     <p><i>Release Date:</i> {{ game.release_date }} </p>
                     <p><i>Price:</i> {{ game.price }}</p>
                     <p><i>About:</i> {{ game.description }} </p>
                     <p><i>Image URL: </i><img src="{{ game.image_url }}" alt="game image"> </p>
                 </div>
-              </main>
-            </div>
+            </main>
+        </div>
+    </div>
+
 
 </body>
 </html>

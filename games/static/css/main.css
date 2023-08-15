@@ -23,3 +23,45 @@
 .description img {
         vertical-align: top;
     }
+
+.navbar {
+    width: 250px;
+    background-color: #002eb9;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding-top: 20px;
+}
+
+.navbar a {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.navbar a:hover {
+    background-color: #2145b1;
+}
+.navbar a.selected {
+    background-color: #2145b1;
+}
+
+#logo {
+    padding: 10px 20px;
+}
+
+#nav-footer {
+    position: absolute;
+    bottom: 40px;
+    left: 20px;
+}
+
+#content {
+    margin-left: 270px;
+    padding: 20px;
+    font-family: Cursive;
+}
