@@ -1,6 +1,9 @@
 """Initialize Flask app."""
 
-from flask import Flask, render_template
+from flask import Flask, render_template, Blueprint
+from .blueprints.index_bp import index_bp
+from .blueprints.game_library_bp import game_library_bp
+from .blueprints.game_info_bp import game_info_bp
 
 
 def create_app():
@@ -9,16 +12,8 @@ def create_app():
     # Create the Flask app object.
     app = Flask(__name__)
 
-    @app.route('/')
-    def layout():
-        return render_template('index.html')
-
-    @app.route('/game_library')
-    def game_library():
-        return render_template('game_library.html')
-
-    @app.route('/game_info')
-    def game_info():
-        return render_template('game_info.html')
+    app.register_blueprint(index_bp)
+    app.register_blueprint(game_library_bp)
+    app.register_blueprint(game_info_bp)
 
     return app
