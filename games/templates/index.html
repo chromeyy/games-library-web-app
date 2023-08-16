@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Home page</title>
-    <link
-      rel="stylesheet" href="../static/css/main.css"
-    />
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>Home page</title>
+        <link
+          rel="stylesheet" href="../static/css/main.css"
+        />
+    </head>
     <body>
         {% include 'navigationBar.html' %}
         <div id="content">
-
-            <header id="header">
-                <h1>CS235 2023: My Game Library</h1>
-                <div class="copyright">&copy; UPI1 | UPI2 | UPI3 (Write your full names or UPIs)</div>
-            </header>
+            {% include 'header.html' %}
 
             {% block main %}
             <main>
-                some text
+                <p>main page</p>
 
             </main>
             {% endblock %}
