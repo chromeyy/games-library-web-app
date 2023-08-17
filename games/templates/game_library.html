@@ -12,8 +12,14 @@
 
         {% block main %}
         <main>
-            <p>game library</p>
-            <a href="{{ url_for('game_info_bp.game_info') }}">game info</a>
+            <ul>
+                {% for game in games_dataset %}
+                <li>
+                    <a href="#">{{ game.title }}</a>
+                    <p>price: {{ game.price }} </p>
+                </li>
+                {% endfor %}
+            </ul>
         </main>
         {% endblock %}
     </body>
