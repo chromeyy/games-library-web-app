@@ -9,13 +9,13 @@
     </head>
     <body>
         {% include 'navigationBar.html' %}
+        {% include 'header.html' %}
         <div id="content">
-            {% include 'header.html' %}
-
             {% block main %}
             <main>
-                <p>main page</p>
-
+                <div id="index-content">
+                    <p>main page</p>
+                </div>
             </main>
             {% endblock %}
         </div>

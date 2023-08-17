@@ -1,17 +1,23 @@
 .copyright {
-    color: black;
+    color: #14452F;
     font-size: 0.9em;
 }
 
 .navbar {
     width: 250px;
-    background-color: #002eb9;
+    background-color: #18392B;
     color: #fff;
     position: fixed;
     top: 0;
     left: 0;
     height: 100%;
     padding-top: 20px;
+    text-align: center;
+}
+
+.navbar ul {
+    list-style-type: none;
+    padding-left: 0px;
 }
 
 .navbar a {
@@ -23,35 +29,40 @@
 }
 
 .navbar a:hover {
-    background-color: #2145b1;
+    background-color: #14452F;
 }
 .navbar a.selected {
-    background-color: #2145b1;
+    background-color: #14452F;
 }
 
 #logo {
-    padding: 10px 20px;
+    padding: 10px;
 }
 
 #nav-footer {
     position: absolute;
     bottom: 40px;
     left: 20px;
+    color: #8EB69B;
 }
 
 body {
-    margin: 0;
+    margin: 0px;
+    background: #daf1de;
 }
 
 #header {
     padding: 20px;
-    background: 	#E6E6FA;
+    background: 	#8EB69B;
     font-size: 25px;
     font-weight: bold;
     text-align: center;
+    color: #14452F;
+    margin-left: 250px;
 }
 
 #content {
-    margin-left: 250px;
-    font-family: Cursive;
+    margin-left: 280px;
+    margin-top: 0px;
 }
+
