@@ -16,7 +16,8 @@
                 {% for game in games_dataset %}
                 <li>
                     <a href="#">{{ game.title }}</a>
-                    <p>price: {{ game.price }} </p>
+                    <p>Price: ${{ game.price }} </p>
+                    <br>
                 </li>
                 {% endfor %}
             </ul>
