@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>Home page</title>
         <link
-          rel="stylesheet" href="../static/css/main.css"
+          rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"
         />
     </head>
     <body class="game_library">
@@ -18,13 +18,18 @@
                     <a href="#">{{ game.title }}</a>
                     <p>Price: ${{ game.price }} </p>
                     <img src={{ game.image_url }} alt="game_image">
+
+                    {% for genre in game.genres %}
+                    <p>{{genre.genre_name}}
+                    {% endfor %}
+
                     <br>
                     <br>
                 </li>
                 {% endfor %}
             </ul>
-            <a href="{{ url_for('game_library_bp.game_library', current_page=current_page - 1) }}"><h3>Previous Page</h3></a>
-            <a href="{{ url_for('game_library_bp.game_library', current_page=current_page + 1) }}"><h3>next Page</h3></a>
+            <a href="{{ url_for('game_library_bp.game_library', selected_genre = selected_genre, current_page=current_page - 1) }}"><h3>Previous Page</h3></a>
+            <a href="{{ url_for('game_library_bp.game_library', selected_genre = selected_genre, current_page=current_page + 1) }}"><h3>next Page</h3></a>
         </main>
         {% endblock %}
     </body>

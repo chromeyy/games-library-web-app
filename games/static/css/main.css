@@ -60,6 +60,7 @@ body {
     color: #14452F;
     margin-left: 250px;
     border: 5px solid #18392B;
+    border-left: 0px;
 }
 
 #content {
