@@ -8,6 +8,12 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_games(self, games_list):
+    def get_games_by_genre(self, genre_name):
+        raise NotImplementedError
+
+    def get_games_by_publisher(self, publisher_name):
+        raise NotImplementedError
+
+    def get_games_by_search(self, search_term):
         raise NotImplementedError
 
