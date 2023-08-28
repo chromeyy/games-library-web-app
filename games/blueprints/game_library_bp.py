@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template
-from ..adapters.datareader.csvdatareader import GameFileCSVReader
+from games.adapters.repository import repo_instance
+import games.adapters.repository as repo
 
 game_library_bp = Blueprint('game_library_bp', __name__)
 
@@ -9,29 +10,7 @@ def game_library(selected_genre, selected_publisher, current_page):
     current_page = int(current_page)
     items_per_page = 10
 
-    #create instance of GameFileCSVReader
-    file_reader = GameFileCSVReader("games/adapters/data/games.csv")
-    #read csv file
-    file_reader.read_csv_file()
-
-    if selected_genre == 'all':
-        games_dataset = file_reader.dataset_of_games
-    else:
-        games_dataset = []
-        for game in file_reader.dataset_of_games:
-            for genre in game.genres:
-                if genre.genre_name == selected_genre:
-                    games_dataset.append(game)
-                    break
-
-    if selected_publisher == 'all':
-        pass
-    else:
-        new_dataset = []
-        for game in games_dataset:
-            if game.publisher.publisher_name == selected_publisher:
-                new_dataset.append(game)
-        games_dataset = new_dataset
+    games_dataset = repo.repo_instance.get_games(selected_genre, selected_publisher)
 
     return render_template(
         'game_library.html',
