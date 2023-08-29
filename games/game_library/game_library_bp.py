@@ -25,7 +25,8 @@ def game_library():
         'game_library.html',
         selected_genre='all',
         current_page=current_page,
-        games_dataset=games_dataset[current_page * items_per_page:current_page * items_per_page + items_per_page]
+        games_dataset=games_dataset[current_page * items_per_page:current_page * items_per_page + items_per_page],
+        genres=services.get_genres()
         )
 
 
@@ -56,7 +57,8 @@ def game_library_search_term():
         current_page=current_page,
         games_dataset=games_dataset[current_page * items_per_page:current_page * items_per_page + items_per_page],
         search_category=search_category,
-        search_term=search_term
+        search_term=search_term,
+        genres=services.get_genres()
         )
 
 
