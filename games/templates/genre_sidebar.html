@@ -1,0 +1,12 @@
+<nav>
+    <div class="genre-sidebar">
+        <h1>Genres</h1>
+        <ul>
+        {% for genre in genres %}
+            <li>
+            <a href="{{ url_for('game_library_bp.game_library_genre', selected_genre=genre.genre_name, current_page=0) }}" class="genre-sidebar-button">{{genre.genre_name}}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</nav>

@@ -150,3 +150,52 @@ ul {
     margin-top: 10px;
     align-content: center;
 }
+
+.form-field {
+    display: inline-block;
+    padding: 10px;
+}
+
+.genre-sidebar {
+    width: 300px;
+    background-color: #18392B;
+    color: #fff;
+    float: right;
+    margin-right: 25px;
+    font-size: 2em;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.genre-sidebar a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.genre-sidebar a:hover {
+    background-color: #14452F;
+}
+
+.genre-sidebar ul {
+    list-style-type: none;
+    padding-left: 0;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    margin: 0;
+    text-align: center;
+}
+
+.genre-sidebar a.selected {
+    background-color: #14452F;
+}
+
+.genre-sidebar h1 {
+    font-size: 1em;
+    margin: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    background: #8EB69B;
+}
