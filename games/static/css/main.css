@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Kanit')
+
+
 .copyright {
     color: #14452F;
     font-size: 0.9em;
@@ -49,6 +52,7 @@
 body {
     margin: 0px;
     background: #daf1de;
+    font-family: 'Kanit', arial;
 }
 
 #header {
@@ -81,6 +85,20 @@ ul {
     list-style: none;
     font-size: 25px;
 }
+
+.game-library li {
+    padding: 20px;
+    margin-left; 0px;
+    background: #8EB69B;
+    width: 500px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.game-library a {
+    text-decoration: none;
+    color: black;
+    }
 
 .slider {
     width: 300px;
@@ -172,6 +190,8 @@ ul {
     color: #fff;
     text-decoration: none;
     transition: background-color 0.3s;
+    padding: 5px;
+    font-size: 20px
 }
 
 .genre-sidebar a:hover {
@@ -181,8 +201,8 @@ ul {
 .genre-sidebar ul {
     list-style-type: none;
     padding-left: 0;
-    padding-top: 12px;
     padding-bottom: 12px;
+    padding-top: 7px;
     margin: 0;
     text-align: center;
 }
