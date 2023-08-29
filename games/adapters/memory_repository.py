@@ -65,12 +65,10 @@ class MemoryRepository(abstract_repo.AbstractRepository):
         game = None
 
         try:
-            game = self.__games_index[game_id]
+            game = self.__games_index[int(game_id)]
         except KeyError:
             pass
-
         return game
-
 
 def populate(data_path, repo: MemoryRepository):
     filename = str(Path(data_path) / "games.csv")

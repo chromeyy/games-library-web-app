@@ -2,7 +2,18 @@
 
 {% block main %}
 <main>
-    <p>game info</p>
-    <h3>{{ game_id }}</h3>
+    <h3>{{ game.title }}</h3>
+    <img src="{{ game.image_url }}" alt="game_image">
+    <p>Price: ${{ game.price }} </p>
+    <p>Release Date: {{ game.release_date }}</p>
+    {% for genre in game.genres %}
+    <p>{{ genre.genre_name }}
+    {% endfor %}
+
+    <p>{{ game.publisher.publisher_name }}</p>
+
+    <p>{{ game.description }}</p>
+
+    <p>Ratings:</p>
 </main>
 {% endblock %}
