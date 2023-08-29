@@ -3,7 +3,6 @@ from pathlib import Path
 from games.domainmodel.model import Game
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
-
 class MemoryRepository(abstract_repo.AbstractRepository):
     def __init__(self):
         self.__games = list()

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request
 from games.adapters.repository import repo_instance
-import games.adapters.repository as repo
+import games.game_library.services as services
 
 game_library_bp = Blueprint('game_library_bp', __name__)
 
@@ -13,7 +13,8 @@ def game_library():
     current_page = int(current_page)
     items_per_page = 10
 
-    games_dataset = repo.repo_instance.get_games_by_genre('all')
+    games_dataset = services.get_games_by_genre('all')
+    services.alpha_sort_games(games_dataset)
 
     return render_template(
         'game_library.html',
@@ -32,7 +33,8 @@ def game_library_search_term():
 
         current_page = int(current_page)
         items_per_page = 10
-        games_dataset = repo.repo_instance.get_games_by_search(result["search_category"], result["search_term"])
+        games_dataset = services.get_games_by_search(result["search_category"], result["search_term"])
+        services.alpha_sort_games(games_dataset)
 
         return render_template(
             'game_library.html',
@@ -52,7 +54,8 @@ def game_library_genre():
     current_page = int(current_page)
     items_per_page = 10
 
-    games_dataset = repo.repo_instance.get_games_by_genre(selected_genre)
+    games_dataset = services.get_games_by_genre(selected_genre)
+    services.alpha_sort_games(games_dataset)
 
     return render_template(
         'game_library.html',
