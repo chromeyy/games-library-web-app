@@ -21,12 +21,15 @@ def game_library():
     if current_page * items_per_page > len(games_dataset):
         current_page = len(games_dataset) // items_per_page
 
+    genres = services.get_genres()
+    services.alpha_sort_genres(genres)
+
     return render_template(
         'game_library.html',
         selected_genre='all',
         current_page=current_page,
         games_dataset=games_dataset[current_page * items_per_page:current_page * items_per_page + items_per_page],
-        genres=services.get_genres()
+        genres=genres
         )
 
 
@@ -51,6 +54,9 @@ def game_library_search_term():
     if current_page * items_per_page > len(games_dataset):
         current_page = len(games_dataset) // items_per_page
 
+    genres = services.get_genres()
+    services.alpha_sort_genres(genres)
+
     return render_template(
         'game_library.html',
         selected_genre='all',
@@ -58,7 +64,7 @@ def game_library_search_term():
         games_dataset=games_dataset[current_page * items_per_page:current_page * items_per_page + items_per_page],
         search_category=search_category,
         search_term=search_term,
-        genres=services.get_genres()
+        genres=genres
         )
 
 
