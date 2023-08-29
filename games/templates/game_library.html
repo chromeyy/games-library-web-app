@@ -1,36 +1,24 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Home page</title>
-        <link
-          rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"
-        />
-    </head>
-    <body class="game_library">
-        {% extends "index.html" %}
+{% extends "index.html" %}
 
-        {% block main %}
-        <main>
-            <ul>
-                {% for game in games_dataset %}
-                <li>
-                    <a href="#">{{ game.title }}</a>
-                    <p>Price: ${{ game.price }} </p>
-                    <img src={{ game.image_url }} alt="game_image">
+{% block main %}
+<main>
+    <ul>
+        {% for game in games_dataset %}
+        <li>
+            <a href="#">{{ game.title }}</a>
+            <p>Price: ${{ game.price }} </p>
+            <img src={{ game.image_url }} alt="game_image">
 
-                    {% for genre in game.genres %}
-                    <p>{{genre.genre_name}}
-                    {% endfor %}
+            {% for genre in game.genres %}
+            <p>{{genre.genre_name}}
+            {% endfor %}
 
-                    <br>
-                    <br>
-                </li>
-                {% endfor %}
-            </ul>
-            <a href="{{ url_for(request.endpoint, selected_genre = selected_genre, current_page=current_page - 1) }}"><h3>Previous Page</h3></a>
-            <a href="{{ url_for(request.endpoint, selected_genre = selected_genre, current_page=current_page + 1) }}"><h3>next Page</h3></a>
-        </main>
-        {% endblock %}
-    </body>
-</html>
+            <br>
+            <br>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for(request.endpoint, selected_genre = selected_genre, current_page=current_page - 1) }}"><h3>Previous Page</h3></a>
+    <a href="{{ url_for(request.endpoint, selected_genre = selected_genre, current_page=current_page + 1) }}"><h3>next Page</h3></a>
+</main>
+{% endblock %}
