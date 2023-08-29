@@ -36,19 +36,19 @@ class MemoryRepository(abstract_repo.AbstractRepository):
         if search_term == '':
             games_dataset = self.__games.copy()
 
-        elif search_category == 'title':
+        elif search_category == 'Title':
             for game in self.__games:
                 if search_term.lower() in game.title.lower():
                     games_dataset.append(game)
 
-        elif search_category == 'genre':
+        elif search_category == 'Genre':
             for game in self.__games:
                 for genre in game.genres:
                     if search_term.lower() in genre.genre_name.lower():
                         games_dataset.append(game)
                         break
 
-        elif search_category == 'publisher':
+        elif search_category == 'Publisher':
             for game in self.__games:
                 if search_term.lower() in game.publisher.publisher_name.lower():
                     games_dataset.append(game)

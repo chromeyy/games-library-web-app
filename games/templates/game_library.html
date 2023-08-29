@@ -6,9 +6,9 @@
     <ul>
         {% for game in games_dataset %}
         <li>
-            <a href="#">{{ game.title }}</a>
+            <a href="{{ url_for(game_info_bp.game_info) }}">{{ game.title }}</a>
             <p>Price: ${{ game.price }} </p>
-            <img src={{ game.image_url }} alt="game_image">
+            <img src="{{ game.image_url }}" alt="game_image">
 
             {% for genre in game.genres %}
             <p>{{genre.genre_name}}
