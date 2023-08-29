@@ -28,8 +28,8 @@
                 </li>
                 {% endfor %}
             </ul>
-            <a href="{{ url_for('game_library_bp.game_library', selected_genre = selected_genre, selected_publisher = selected_publisher, current_page=current_page - 1) }}"><h3>Previous Page</h3></a>
-            <a href="{{ url_for('game_library_bp.game_library', selected_genre = selected_genre, selected_publisher = selected_publisher, current_page=current_page + 1) }}"><h3>next Page</h3></a>
+            <a href="{{ url_for(request.endpoint, selected_genre = selected_genre, selected_publisher = selected_publisher, current_page=current_page - 1) }}"><h3>Previous Page</h3></a>
+            <a href="{{ url_for(request.endpoint, selected_genre = selected_genre, selected_publisher = selected_publisher, current_page=current_page + 1) }}"><h3>next Page</h3></a>
         </main>
         {% endblock %}
     </body>
