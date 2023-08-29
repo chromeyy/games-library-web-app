@@ -126,9 +126,6 @@ ul {
     height: 300px;
     clear: both;
     position: relative;
-    -webkit-transition: left 2s;
-    -moz-transition: left 2s;
-    -o-transition: left 2s;
     transition: left 2s;
 }
 .slide {
@@ -146,6 +143,7 @@ ul {
 #slide-3:target ~ .image-container {
     left: -600px;
 }
+
 .buttons {
     position: relative;
     top: -20px;
