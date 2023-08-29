@@ -80,11 +80,14 @@ def game_library_genre():
     if current_page * items_per_page > len(games_dataset):
         current_page = len(games_dataset) // items_per_page
 
+    genres = services.get_genres()
+    services.alpha_sort_genres(genres)
+
     return render_template(
         'game_library.html',
         selected_genre=selected_genre,
         current_page=current_page,
         games_dataset=games_dataset[current_page * items_per_page:current_page * items_per_page + items_per_page],
-        genres=services.get_genres()
+        genres=genres
         )
 

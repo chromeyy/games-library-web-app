@@ -11,3 +11,6 @@ def get_genres():
 
 def alpha_sort_games(games):
     games.sort(key=lambda game: game.title)
+
+def alpha_sort_genres(genres):
+    genres.sort(key=lambda genre: genre.genre_name)

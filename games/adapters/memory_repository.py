@@ -75,7 +75,7 @@ class MemoryRepository(abstract_repo.AbstractRepository):
             self.__genres.append(genre)
 
     def get_list_of_genres(self):
-        return self.__genres.copy()
+        return self.__genres
 
 def populate(data_path, repo: MemoryRepository):
     filename = str(Path(data_path) / "games.csv")
