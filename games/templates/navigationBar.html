@@ -3,9 +3,7 @@
         <img id="logo" src="https://static.vecteezy.com/system/resources/previews/009/380/532/original/shark-drawing-clipart-design-illustration-free-png.png" alt="Logo" width="200" height="150">
         <ul>
             <li><a href="{{ url_for('index_bp.index') }}" class="selected">Home</a></li>
-            <li><a href="{{ url_for('game_library_bp.game_library', selected_genre = 'all', selected_publisher = 'all', current_page=0) }}">All Games</a></li>
-            <li><a href="#">Reviews</a></li>
-            <li><a href="#">Wishlist</a></li>
+            <li><a href="{{ url_for('game_library_bp.game_library', selected_genre = 'all', current_page=0) }}">All Games</a></li>
         </ul>
         <div id="nav-footer">
         &copy; TTK
