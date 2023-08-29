@@ -30,32 +30,29 @@ class MemoryRepository(abstract_repo.AbstractRepository):
                     games_dataset.append(game)
         return games_dataset
 
-    def get_games_by_search(self, search_term=""):
-        if search_term == "":
+    def get_games_by_search(self, search_category='title', search_term=''):
+        games_dataset = list()
+
+        if search_term == '':
             games_dataset = self.__games.copy()
-        else:
-            games_dataset = list()
+
+        elif search_category == 'title':
             for game in self.__games:
-                game_added = False
-
-                if (search_term in game.title) and not game_added:
+                if search_term.lower() in game.title.lower():
                     games_dataset.append(game)
-                    game_added = True
 
-                if not game_added:
-                    for genre in game.genres:
-                        if search_term in genre.genre_name:
-                            games_dataset.append(game)
-                            game_added = True
-                            break
+        elif search_category == 'genre':
+            for game in self.__games:
+                for genre in game.genres:
+                    if search_term.lower() in genre.genre_name.lower():
+                        games_dataset.append(game)
+                        break
 
-                if search_term in game.publisher and not game_added:
+        elif search_category == 'publisher':
+            for game in self.__games:
+                if search_term.lower() in game.publisher.publisher_name.lower():
                     games_dataset.append(game)
-                    game_added = True
 
-                if search_term in game.description and not game_added:
-                    games_dataset.append(game)
-                    # game_added = True
         return games_dataset
 
     def add_games(self, game):
