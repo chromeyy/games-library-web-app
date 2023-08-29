@@ -19,3 +19,10 @@ class AbstractRepository(abc.ABC):
 
     def get_game_by_id(self, game_id):
         raise NotImplementedError
+
+    def add_genre(self, genre):
+        raise NotImplementedError
+
+    def get_list_of_genres(self):
+        raise NotImplementedError
+

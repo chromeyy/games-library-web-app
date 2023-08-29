@@ -6,13 +6,6 @@ from games.adapters.memory_repository import MemoryRepository, populate
 
 from flask import Flask
 
-
-# from .blueprints.index_bp import index_bp
-
-
-
-
-
 def create_app():
     """Construct the core application."""
 

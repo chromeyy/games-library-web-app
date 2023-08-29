@@ -82,6 +82,7 @@ def game_library_genre():
         'game_library.html',
         selected_genre=selected_genre,
         current_page=current_page,
-        games_dataset=games_dataset[current_page * items_per_page:current_page * items_per_page + items_per_page]
+        games_dataset=games_dataset[current_page * items_per_page:current_page * items_per_page + items_per_page],
+        genres=services.get_genres()
         )
 

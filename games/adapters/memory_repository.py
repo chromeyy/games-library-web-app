@@ -1,12 +1,13 @@
 import games.adapters.repository as abstract_repo
 from pathlib import Path
-from games.domainmodel.model import Game
+from games.domainmodel.model import Game, Genre
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
 class MemoryRepository(abstract_repo.AbstractRepository):
     def __init__(self):
         self.__games = list()
         self.__games_index = dict()
+        self.__genres = list()
 
     def get_games_by_genre(self, selected_genre='all'):
         if selected_genre == 'all':
@@ -69,6 +70,13 @@ class MemoryRepository(abstract_repo.AbstractRepository):
             pass
         return game
 
+    def add_genre(self, genre):
+        if isinstance(genre, Genre):
+            self.__genres.append(genre)
+
+    def get_list_of_genres(self):
+        return self.__genres.copy()
+
 def populate(data_path, repo: MemoryRepository):
     filename = str(Path(data_path) / "games.csv")
     file_reader = GameFileCSVReader(filename)
@@ -76,3 +84,6 @@ def populate(data_path, repo: MemoryRepository):
 
     for game in file_reader.dataset_of_games:
         repo.add_games(game)
+
+    for genre in file_reader.dataset_of_genres:
+        repo.add_genre(genre)
