@@ -1,20 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Home page</title>
-        <link
-          rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"
-        />
-    </head>
-    <body>
-        {% extends "index.html" %}
+{% extends "index.html" %}
 
-        {% block main %}
-        <main>
-            <p>game info</p>
+{% block main %}
+<main>
+    <p>game info</p>
 
-        </main>
-        {% endblock %}
-    </body>
-</html>
+</main>
+{% endblock %}
