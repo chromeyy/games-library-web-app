@@ -6,7 +6,7 @@
     <ul>
         {% for game in games_dataset %}
         <li>
-            <a href="{{ url_for(game_info_bp.game_info) }}">{{ game.title }}</a>
+            <a href="{{ url_for('game_info_bp.game_info', game_id = game.game_id) }}">{{ game.title }}</a>
             <p>Price: ${{ game.price }} </p>
             <img src="{{ game.image_url }}" alt="game_image">
 
