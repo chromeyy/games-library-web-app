@@ -2,18 +2,33 @@
 
 {% block main %}
 <main>
-    <h3>{{ game.title }}</h3>
-    <img src="{{ game.image_url }}" alt="game_image">
-    <p>Price: ${{ game.price }} </p>
-    <p>Release Date: {{ game.release_date }}</p>
-    {% for genre in game.genres %}
-    <p>{{ genre.genre_name }}
-    {% endfor %}
+    <div id="game-info-container">
+        <h3 id="game-title">{{ game.title }}</h3>
+        <div id="game-detail-container">
+            <img id="game-image" src="{{ game.image_url }}" alt="game_image">
 
-    <p>{{ game.publisher.publisher_name }}</p>
+            <p class="game-detail"><span class="game-detail-label">Price: </span>${{ game.price }}</p>
 
-    <p>{{ game.description }}</p>
+            <p class="game-detail"><span class="game-detail-label">Release Date: </span>{{ game.release_date }}</p>
 
-    <p>Ratings:</p>
+            <p class="game-detail"><span class="game-detail-label">Publisher: </span>{{ game.publisher.publisher_name }}</p>
+
+            <p class="game-detail">
+                <span class="game-detail-label">Genres: </span>
+                {% for genre in game.genres %}
+                <br/>{{ genre.genre_name }}
+                {% endfor %}
+            </p>
+        </div>
+        <br/>
+        <div id="game-summary">
+            <h4>Game Description:</h4>
+            <p id="game-description">{{ game.description }}</p>
+
+            <h4>Ratings:</h4>
+        </div>
+
+    </div>
+
 </main>
 {% endblock %}

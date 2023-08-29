@@ -8,7 +8,6 @@ def game_info():
 
     game_id = request.args.get('game_id')
     game = services.get_game_by_id(game_id)
-    print(game.title)
 
     return render_template('game_info.html', game=game)
 
