@@ -7,6 +7,7 @@ from games.adapters.datareader.csvdatareader import GameFileCSVReader
 class MemoryRepository(abstract_repo.AbstractRepository):
     def __init__(self):
         self.__games = list()
+        self.__games_index = dict()
 
     def get_games_by_genre(self, selected_genre='all'):
         if selected_genre == 'all':
@@ -58,6 +59,17 @@ class MemoryRepository(abstract_repo.AbstractRepository):
     def add_games(self, game):
         if isinstance(game, Game):
             self.__games.append(game)
+            self.__games_index[game.game_id] = game
+
+    def get_game_by_id(self, game_id) -> Game:
+        game = None
+
+        try:
+            game = self.__games_index[game_id]
+        except KeyError:
+            pass
+
+        return game
 
 
 def populate(data_path, repo: MemoryRepository):
