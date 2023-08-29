@@ -1,0 +1,18 @@
+<div id="search-form-wrapper">
+    <form method="POST" action="{{ url_for("game_library_bp.game_library_search_term", current_page=0) }}">
+        <div class="form-field">
+            <p>Category</p>
+            <input type="radio" id="title" name="search_category" value="Title"/>
+            <label for="title">Title</label><br>
+            <input type="radio" id="genre" name="search_category" value="Genre"/>
+            <label for="genre">Genre</label><br>
+            <input type="radio" id="publisher" name="search_category" value="Publisher"/>
+            <label for="publisher">Publisher</label>
+        </div>
+        <div class="form-field">
+            <label for="search_term">Search term:</label>
+            <input type="text" id="search_term" name="search_term" value=""/>
+        </div>
+        <input type = "submit" value = "Submit" />
+    </form>
+</div>
