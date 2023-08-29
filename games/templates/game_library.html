@@ -7,11 +7,13 @@
         {% include 'search_form.html' %}
         <ul>
             {% for game in games_dataset %}
-            <li>
-                <a href="{{ url_for('game_info_bp.game_info', game_id = game.game_id) }}">{{ game.title }}</a>
-                <img src="{{ game.image_url }}" alt="game_image">
-                <p>${{ game.price }} </p>
-            </li>
+            <a href="{{ url_for('game_info_bp.game_info', game_id = game.game_id) }}">
+                <li>
+                    <h3>{{ game.title }}</h3>
+                    <img src="{{ game.image_url }}" alt="game_image">
+                    <p>${{ game.price }} </p>
+                </li>
+            </a>
             {% endfor %}
         </ul>
         <button class="page-buttons" onclick="location.href='{{ url_for(request.endpoint, selected_genre = selected_genre, search_category=search_category, search_term=search_term, current_page=current_page - 1) }}'">Previous Page</button>
