@@ -244,6 +244,11 @@ ul {
     color: #14452F;
 }
 
+.game-detail-label {
+    font-weight: bold;
+    font-size: 18px;
+}
+
 #game-title {
     text-align: left;
     font-size: 2em;
