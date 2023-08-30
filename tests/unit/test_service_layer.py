@@ -74,9 +74,9 @@ def test_game_library_get_num_of_games_in_genre(in_memory_repo):
 
 
 def test_game_library_get_last_page_num():
-    assert games_library_services.get_last_page_num(3, 2) == 2
-    assert games_library_services.get_last_page_num(3, 3) == 1
-    assert games_library_services.get_last_page_num(4, 2) == 2
+    assert games_library_services.get_last_page_num(3, 2) == 1
+    assert games_library_services.get_last_page_num(3, 3) == 0
+    assert games_library_services.get_last_page_num(4, 2) == 1
 
 
 def test_game_library_get_num_of_genres(in_memory_repo):

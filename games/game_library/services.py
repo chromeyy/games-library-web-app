@@ -26,7 +26,7 @@ def get_num_of_games_in_search(search_category, search_term, repo: AbstractRepos
 
 
 def get_last_page_num(num_of_games, items_per_page):
-    return ceil(num_of_games / items_per_page)
+    return ceil(num_of_games / items_per_page) - 1
 
 
 def get_num_of_genres(repo: AbstractRepository):
