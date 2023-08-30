@@ -44,21 +44,25 @@ def test_game_library_get_genres(in_memory_repo):
 
 
 def test_game_library_get_num_of_games_in_search(in_memory_repo):
-    pass
+    assert games_library_services.get_num_of_games_in_search("Title", "", in_memory_repo) == 0
+    assert games_library_services.get_num_of_games_in_search("Genre", "", in_memory_repo) == 0
+    assert games_library_services.get_num_of_games_in_search("Genre", "", in_memory_repo) == 0
 
 
 def test_game_library_get_num_of_games_in_genre(in_memory_repo):
-    pass
+    assert games_library_services.get_num_of_games_in_genre("RPG", in_memory_repo) == 131
+    assert games_library_services.get_num_of_games_in_genre("Invalid", in_memory_repo) == 0
+    assert games_library_services.get_num_of_games_in_genre("Adventure", in_memory_repo) == 344
 
 
-def test_game_library_get_last_page_num(in_memory_repo):
+def test_game_library_get_last_page_num():
     assert games_library_services.get_last_page_num(3, 2) == 2
     assert games_library_services.get_last_page_num(3, 3) == 1
     assert games_library_services.get_last_page_num(4, 2) == 2
 
 
 def test_game_library_get_num_of_genres(in_memory_repo):
-    pass
+    assert games_library_services.get_num_of_genres(in_memory_repo) == 24
 
 
 def test_game_library_alpha_sort_games(list_of_games):
@@ -71,9 +75,4 @@ def test_game_library_alpha_sort_genres(list_of_genres):
     assert str(list_of_genres) == "[<Genre A>, <Genre B>, <Genre C>, <Genre D>]"
 
 
-# Test service layer returns an existing game object
-# Test service layer retrieves correct number of game objects
-# Test only X games are retrieved from the service layer for the pagination functionality
-# Test getting games for a search key ‘genre’
-# Test getting games for a search key ‘publisher’
 # Test inserting non-existing search key throws exception
