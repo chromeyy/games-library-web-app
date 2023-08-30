@@ -184,6 +184,10 @@ ul {
     padding: 10px;
 }
 
+#search-form-wrapper {
+    margin-left: 25px;
+}
+
 .genre-sidebar {
     width: 300px;
     background-color: #18392B;
@@ -228,4 +232,22 @@ ul {
     padding-bottom: 10px;
     text-align: center;
     background: #8EB69B;
+}
+
+#button-wrapper {
+    margin-left: 40px;
+    height: 40px;
+    wdith: 100%
+}
+
+.page-buttons {
+    margin-right: 356px;
+}
+
+#page-val {
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    left: 560px;
+    margin-top: -40px;
 }
