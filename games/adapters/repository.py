@@ -14,7 +14,7 @@ class AbstractRepository(abc.ABC):
     def get_games_by_publisher(self, publisher_name):
         raise NotImplementedError
 
-    def get_games_by_search(self, search_term):
+    def get_games_by_search(self, search_category, search_term):
         raise NotImplementedError
 
     def get_game_by_id(self, game_id):

@@ -1,4 +1,5 @@
-import games.adapters.repository as repo
+from games.adapters.repository import AbstractRepository
 
-def get_game_by_id(game_id):
-    return repo.repo_instance.get_game_by_id(game_id)
+
+def get_game_by_id(game_id, repo: AbstractRepository):
+    return repo.get_game_by_id(game_id)

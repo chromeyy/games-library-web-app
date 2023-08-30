@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from games.adapters.repository import repo_instance
 import games.game_library.services as services
-
+import games.adapters.repository as repo
 game_library_bp = Blueprint('game_library_bp', __name__)
 
 
@@ -12,16 +11,17 @@ def game_library():
 
     current_page = int(current_page)
     items_per_page = 10
-    last_page_number = services.get_last_page_num(services.get_num_of_games_in_genre("all"), items_per_page)
+    last_page_number = services.get_last_page_num(services.get_num_of_games_in_genre("all", repo.repo_instance),
+                                                  items_per_page)
 
     if current_page < 0:
         current_page = 0
-    if current_page * items_per_page > services.get_num_of_games_in_genre('all'):
+    if current_page * items_per_page > services.get_num_of_games_in_genre('all', repo.repo_instance):
         current_page = last_page_number
 
-    games_dataset = services.get_games_by_genre('all', current_page, items_per_page)
+    games_dataset = services.get_games_by_genre('all', current_page, items_per_page, repo.repo_instance)
 
-    genres = services.get_genres()
+    genres = services.get_genres(repo.repo_instance)
     services.alpha_sort_genres(genres)
 
     return render_template(
@@ -47,17 +47,17 @@ def game_library_search_term():
 
     current_page = int(current_page)
     items_per_page = 10
-    last_page_number = services.get_last_page_num(services.get_num_of_games_in_search(search_category, search_term),
+    last_page_number = services.get_last_page_num(services.get_num_of_games_in_search(search_category, search_term, repo.repo_instance),
                                                   items_per_page)
 
     if current_page < 0:
         current_page = 0
-    if current_page * items_per_page > services.get_num_of_games_in_search(search_category, search_term):
+    if current_page * items_per_page > services.get_num_of_games_in_search(search_category, search_term, repo.repo_instance):
         current_page = last_page_number
 
-    games_dataset = services.get_games_by_search(search_category, search_term, current_page, items_per_page)
+    games_dataset = services.get_games_by_search(search_category, search_term, current_page, items_per_page, repo.repo_instance)
 
-    genres = services.get_genres()
+    genres = services.get_genres(repo.repo_instance)
     services.alpha_sort_genres(genres)
 
     return render_template(
@@ -72,7 +72,6 @@ def game_library_search_term():
         )
 
 
-
 @game_library_bp.route('/game_library/genre')
 def game_library_genre():
 
@@ -81,16 +80,16 @@ def game_library_genre():
 
     current_page = int(current_page)
     items_per_page = 10
-    last_page_number = services.get_last_page_num(services.get_num_of_games_in_genre(selected_genre), items_per_page)
+    last_page_number = services.get_last_page_num(services.get_num_of_games_in_genre(selected_genre, repo.repo_instance), items_per_page)
 
     if current_page < 0:
         current_page = 0
-    if current_page * items_per_page > services.get_num_of_games_in_genre(selected_genre):
+    if current_page * items_per_page > services.get_num_of_games_in_genre(selected_genre, repo.repo_instance):
         current_page = last_page_number
 
-    games_dataset = services.get_games_by_genre(selected_genre, current_page, items_per_page)
+    games_dataset = services.get_games_by_genre(selected_genre, current_page, items_per_page, repo.repo_instance)
 
-    genres = services.get_genres()
+    genres = services.get_genres(repo.repo_instance)
     services.alpha_sort_genres(genres)
 
     return render_template(
