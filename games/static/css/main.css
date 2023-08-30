@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Kanit');
-@import "compass/css3";
 
 
 .copyright {
@@ -9,7 +8,7 @@
 
 .navbar {
     width: 250px;
-    background-color: #18392B;
+    background-color: #33614C;
     color: #fff;
     position: fixed;
     top: 0;
@@ -33,11 +32,9 @@
 }
 
 .navbar a:hover {
-    background-color: #14452F;
+    background-color: #1B4935;
 }
-.navbar a.selected {
-    background-color: #14452F;
-}
+
 
 #logo {
     padding: 10px;
@@ -64,7 +61,7 @@ body {
     text-align: center;
     color: #14452F;
     margin-left: 250px;
-    border: 5px solid #18392B;
+    border: 5px solid #33614C;
     border-left: 0px;
 }
 
@@ -158,30 +155,9 @@ ul {
     background-color: lightgreen;
 }
 
-#game-title {
-    text-align: center;
-}
-
-#game-image {
-    margin-right: 30px;
-    float: left;
-}
-
-#game-detail-container {
-    align-content: center;
-    margin-bottom: 10px;
-    width: 100%;
-    height: 200px;
-}
-
-#game-summary {
-    margin-top: 10px;
-    align-content: center;
-}
-
 .genre-sidebar {
     width: 300px;
-    background-color: #18392B;
+    background-color: #33614C;
     color: #fff;
     float: right;
     margin-right: 25px;
@@ -201,7 +177,7 @@ ul {
 }
 
 .genre-sidebar a:hover {
-    background-color: #14452F;
+    background-color: #1B4935;
 }
 
 .genre-sidebar ul {
@@ -211,10 +187,6 @@ ul {
     padding-top: 7px;
     margin: 0;
     text-align: center;
-}
-
-.genre-sidebar a.selected {
-    background-color: #14452F;
 }
 
 .genre-sidebar h1 {
@@ -265,4 +237,37 @@ ul {
 .form-field {
     display: inline-block;
     padding: 10px;
+}
+
+
+.game-detail {
+    margin-top: 5px;
+    color: #14452F;
+}
+
+#game-title {
+    text-align: left;
+    font-size: 2em;
+    font-weight: bold;
+    color: #14452F;
+}
+
+#game-image {
+    margin-right: 30px;
+    float: left;
+    border-radius: 10px;
+    border: 5px solid #33614C;
+}
+
+#game-detail-container {
+    align-content: center;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 200px;
+}
+
+#game-summary {
+    margin-top: 10px;
+    align-content: center;
+    color: #14452F;
 }
