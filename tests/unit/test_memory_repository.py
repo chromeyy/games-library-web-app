@@ -1,9 +1,6 @@
 import pytest
 
-from pathlib import Path
 from games.domainmodel.model import *
-import games.adapters.repository as repo
-from games.adapters.memory_repository import MemoryRepository, populate
 
 
 @pytest.fixture()
