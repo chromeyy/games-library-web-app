@@ -17,8 +17,8 @@
             {% endfor %}
         </ul>
         <div id="button-wrapper">
-            <button class="page-buttons" onclick="location.href='{{ url_for(request.endpoint, selected_genre = selected_genre, search_category=search_category, search_term=search_term, current_page=current_page - 1) }}'">Previous Page</button>
-            <button class="page-buttons" onclick="location.href='{{ url_for(request.endpoint, selected_genre = selected_genre, search_category=search_category, search_term=search_term, current_page=current_page + 1) }}'">Next Page</button>
+            <button class="page-button-left" onclick="location.href='{{ url_for(request.endpoint, selected_genre = selected_genre, search_category=search_category, search_term=search_term, current_page=current_page - 1) }}'">Previous Page</button>
+            <button class="page-button-right" onclick="location.href='{{ url_for(request.endpoint, selected_genre = selected_genre, search_category=search_category, search_term=search_term, current_page=current_page + 1) }}'">Next Page</button>
         </div>
         <p id="page-val">page {{current_page}}</p>
     </div>
