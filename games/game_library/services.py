@@ -1,5 +1,5 @@
 from games.adapters.repository import AbstractRepository
-
+from math import ceil
 
 def get_games_by_genre(genre, current_page, items_per_page, repo: AbstractRepository):
     games = repo.get_games_by_genre(genre)
@@ -26,7 +26,7 @@ def get_num_of_games_in_search(search_category, search_term, repo: AbstractRepos
 
 
 def get_last_page_num(num_of_games, items_per_page):
-    return num_of_games // items_per_page
+    return ceil(num_of_games / items_per_page)
 
 
 def get_num_of_genres(repo: AbstractRepository):
