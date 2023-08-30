@@ -301,7 +301,7 @@ input[type=radio]:checked {
 
 #game-summary {
     margin-top: 10px;
-    align-content: center;
+    align-content: left;
     color: #14452F;
 }
 
