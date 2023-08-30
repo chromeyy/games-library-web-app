@@ -18,28 +18,16 @@
                 </div>
                 <div id="para1">
                     <p>To explore our entire game library, alongside their reviews, descriptions, prices and much more, simply use the navigation bar on the left.</p>
+                    <br>
+                    <h3>GAME OF THE MONTH</h3>
                 </div>
-                <div id="get-to-know-title">
-                    <br>
-                    <br>
-                <p>Get To Know Us</p>
-                    <br>
-                    <br>
-                    <div class="slider">
-                        <span id="slide-1"></span>
-                        <span id="slide-2"></span>
-                        <span id="slide-3"></span>
-                        <div class="image-container">
-                          <img src="https://cdn.shopify.com/s/files/1/0150/0643/3380/files/SBP.png?11037498073554759253" class="slide" width="300" height="300" />
-                          <img src="https://i.pinimg.com/564x/07/a4/32/07a432d61671dc1acf075fb60ff358f7.jpg" class="slide" width="300" height="300" />
-                          <img src="https://cdn.openart.ai/stable_diffusion/d04860bdafef554d1de05f3a1e7e00275b1768e4_2000x2000.webp" class="slide" width="300" height="300" />
-                        </div>
-                        <div class="buttons">
-                          <a href="#slide-1"></a>
-                          <a href="#slide-2"></a>
-                          <a href="#slide-3"></a>
-                        </div>
-                      </div>
+                <div id="game-of-the-month">
+                    <a href="{{ url_for('game_info_bp.game_info', game_id = 1141880) }}">
+                        <h3>Crazy Critters - Combat Cats</h3>
+                        <img id="game-of-month-img" src="https://cdn.akamai.steamstatic.com/steam/apps/1141880/header.jpg?t=1603273958" alt="game_of_month_image">
+                    </a>
+                </div>
+
             </main>
             {% endblock %}
         </div>
