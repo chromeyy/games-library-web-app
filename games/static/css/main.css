@@ -242,7 +242,7 @@ ul {
 #go-button {
     background-color: #8EB69B;
     color: #fff;
-    border: solid;
+    border: solid #18392B;
     border-radius: 6px;
     padding: 5px;
 }
@@ -250,22 +250,22 @@ ul {
 #search_term {
     background-color: #8EB69B;
     color: #fff;
-    border: solid #fff;
+    border: solid #18392B;
     border-radius: 5px;
     padding: 5px;
 }
 
 input[type=radio] {
          appearance: none;
-         padding: 7px;
+         padding: 6px;
          background-color: 33614C;
          border-radius:50%;
-         border: solid #fff;
+         border: solid #18392B;
 }
 
 input[type=radio]:checked {
     background-color: #8EB69B;
-    border: solid #fff;
+    border: solid #18392B;
 }
 
 .game-detail {
