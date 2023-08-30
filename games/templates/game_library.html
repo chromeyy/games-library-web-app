@@ -7,23 +7,23 @@
         {% include 'search_form.html' %}
         <ul>
             {% for game in games_dataset %}
-            <a href="{{ url_for('game_info_bp.game_info', game_id = game.game_id) }}">
-                <li>
+            <li>
+                <a href="{{ url_for('game_info_bp.game_info', game_id = game.game_id) }}">
                     <h3>{{ game.title }}</h3>
                     <img src="{{ game.image_url }}" alt="game_image">
                     <p>${{ game.price }} </p>
-                </li>
-            </a>
+                </a>
+            </li>
             {% endfor %}
         </ul>
         <div id="button-wrapper">
-            {% if current_page <= 0: %}
+            {% if current_page <= 0 %}
             <button style="visibility: hidden;" class="page-button-left" onclick="location.href='{{ url_for(request.endpoint, selected_genre = selected_genre, search_category=search_category, search_term=search_term, current_page=current_page - 1) }}'">Previous Page</button>
             {% else %}
             <button class="page-button-left" onclick="location.href='{{ url_for(request.endpoint, selected_genre = selected_genre, search_category=search_category, search_term=search_term, current_page=current_page - 1) }}'">Previous Page</button>
             {% endif %}
 
-            {% if current_page >= last_page_number: %}
+            {% if current_page >= last_page_number %}
             <button style="visibility: hidden;" class="page-button-right" onclick="location.href='{{ url_for(request.endpoint, selected_genre = selected_genre, search_category=search_category, search_term=search_term, current_page=current_page + 1) }}'">Next Page</button>
             {% else %}
             <button class="page-button-right" onclick="location.href='{{ url_for(request.endpoint, selected_genre = selected_genre, search_category=search_category, search_term=search_term, current_page=current_page + 1) }}'">Next Page</button>

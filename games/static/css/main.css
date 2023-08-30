@@ -257,7 +257,7 @@ ul {
 input[type=radio] {
          appearance: none;
          padding: 6px;
-         background-color: 33614C;
+         background-color: #33614C;
          border-radius:50%;
          border: solid #18392B;
 }
@@ -300,7 +300,6 @@ input[type=radio]:checked {
 
 #game-summary {
     margin-top: 10px;
-    align-content: left;
     color: #14452F;
 }
 

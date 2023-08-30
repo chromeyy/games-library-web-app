@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request
 import games.game_library.services as services
 import games.adapters.repository as repo
 game_library_bp = Blueprint('game_library_bp', __name__)
@@ -100,4 +100,3 @@ def game_library_genre():
         genres=genres,
         last_page_number=last_page_number
         )
-
