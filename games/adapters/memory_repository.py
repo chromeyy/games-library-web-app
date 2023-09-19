@@ -1,6 +1,8 @@
+import csv
 import games.adapters.repository as abstract_repo
 from pathlib import Path
-from games.domainmodel.model import Game, Genre
+from datetime import date, datetime
+from games.domainmodel.model import Game, Genre, User, Review
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
 class MemoryRepository(abstract_repo.AbstractRepository):
@@ -8,6 +10,8 @@ class MemoryRepository(abstract_repo.AbstractRepository):
         self.__games = list()
         self.__games_index = dict()
         self.__genres = list()
+        self.__users = list()
+        self.__reviews = list()
 
     def get_games_by_genre(self, selected_genre='all'):
         if selected_genre == 'all':
@@ -77,6 +81,22 @@ class MemoryRepository(abstract_repo.AbstractRepository):
     def get_list_of_genres(self):
         return self.__genres
 
+    def add_user(self, user: User):
+        self.__users.append(user)
+
+    def get_user(self, user_name) -> User:
+        pass
+        # implementation of get_user
+        # CWA implementation below
+        # return next((user for user in self.__users if user.user_name == user_name), None)
+
+    def add_review(self, review: Review):
+        # call parent class first, add_comment relies on implementation of code common to all derived classes
+        self.__reviews.append(review)
+
+    def get_comments(self):
+        return self.__reviews
+
 def populate(data_path, repo: MemoryRepository):
     filename = str(Path(data_path) / "games.csv")
     file_reader = GameFileCSVReader(filename)
@@ -87,3 +107,4 @@ def populate(data_path, repo: MemoryRepository):
 
     for genre in file_reader.dataset_of_genres:
         repo.add_genre(genre)
+
