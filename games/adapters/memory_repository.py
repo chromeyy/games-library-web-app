@@ -142,6 +142,13 @@ def load_reviews(data_path: Path, repo: MemoryRepository, users):
     return reviews
 
 
+def load_favourites(data_path: Path, repo: MemoryRepository, users):
+    favourites_filename = str(Path(data_path) / "favourites.csv")
+    for data_row in read_csv_file(favourites_filename):
+        for game_id in data_row[2].split(','):
+            users[data_row[1]].add_favourite_game(repo.get_game_by_id(game_id))
+
+
 def populate(data_path, repo: MemoryRepository):
     filename = str(Path(data_path) / "games.csv")
     file_reader = GameFileCSVReader(filename)
@@ -154,5 +161,5 @@ def populate(data_path, repo: MemoryRepository):
         repo.add_genre(genre)
 
     users = load_users(data_path, repo)
-
     load_reviews(data_path, repo, users)
+    load_favourites(data_path, repo, users)

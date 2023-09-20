@@ -69,7 +69,7 @@ def login():
             # Initialise session and redirect the user to the home page.
             session.clear()
             session['user_name'] = user['user_name']
-            return redirect(url_for('home_bp.home'))
+            return redirect(url_for('index_bp.index'))
 
         except services.UnknownUserException:
             # Username not known to the system, set a suitable error message.
@@ -94,7 +94,7 @@ def login():
 @authentication_bp.route('logout')
 def logout():
     session.clear()
-    return redirect(url_for('home_bp.home'))
+    return redirect(url_for('index_bp.index'))
 
 
 def login_required(view):
