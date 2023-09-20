@@ -39,4 +39,7 @@ def create_app(test_config=None):
         from games.game_info.game_info_bp import game_info_bp
         app.register_blueprint(game_info_bp)
 
+        from games.authentication.authentication_bp import authentication_bp
+        app.register_blueprint(authentication_bp)
+
     return app

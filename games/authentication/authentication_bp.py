@@ -27,7 +27,7 @@ def register():
         try:
             services.add_user(form.user_name.data, form.password.data, repo.repo_instance)
 
-            # All is well, redirect the user to the login page.
+            # All is well, redirect the user to the successful registration page.
             return redirect(url_for('authentication_bp.register_success'))
         except services.NameNotUniqueException:
             user_name_not_unique = 'Your user name is already taken - please supply another'
