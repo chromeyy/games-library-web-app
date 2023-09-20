@@ -1,1 +1,1 @@
-id,author-id,article-id,rating,comment-text,timestamp
+id,user-id,game-id,rating,comment-text

@@ -4,6 +4,7 @@ from pathlib import Path
 from datetime import date, datetime
 from games.domainmodel.model import Game, Genre, User, Review
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
+from werkzeug.security import generate_password_hash
 
 
 class MemoryRepository(abstract_repo.AbstractRepository):
@@ -98,6 +99,49 @@ class MemoryRepository(abstract_repo.AbstractRepository):
         return self.__reviews
 
 
+def read_csv_file(filename: str):
+    with open(filename, encoding='utf-8-sig') as infile:
+        reader = csv.reader(infile)
+
+        headers = next(reader)
+
+        for row in reader:
+            row = [item.strip() for item in row]
+            yield row
+
+
+def load_users(data_path: Path, repo: MemoryRepository):
+    users = dict()
+
+    users_filename = str(Path(data_path) / "users.csv")
+    for data_row in read_csv_file(users_filename):
+        user = User(
+            username=data_row[1],
+            password=generate_password_hash(data_row[2])
+        )
+        repo.add_user(user)
+        users[data_row[0]] = user
+    return users
+
+
+def load_reviews(data_path: Path, repo: MemoryRepository, users):
+    reviews = dict()
+
+    reviews_filename = str(Path(data_path) / "reviews.csv")
+    for data_row in read_csv_file(reviews_filename):
+        review = Review(
+            users[data_row[1]],
+            repo.get_game_by_id(data_row[2]),
+            int(data_row[3]),
+            data_row[4]
+        )
+        users[data_row[1]].add_review(review)
+        repo.add_review(review)
+        reviews[data_row[0]] = review
+
+    return reviews
+
+
 def populate(data_path, repo: MemoryRepository):
     filename = str(Path(data_path) / "games.csv")
     file_reader = GameFileCSVReader(filename)
@@ -108,3 +152,7 @@ def populate(data_path, repo: MemoryRepository):
 
     for genre in file_reader.dataset_of_genres:
         repo.add_genre(genre)
+
+    users = load_users(data_path, repo)
+
+    load_reviews(data_path, repo, users)
