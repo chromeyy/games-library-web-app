@@ -5,6 +5,7 @@ from datetime import date, datetime
 from games.domainmodel.model import Game, Genre, User, Review
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
+
 class MemoryRepository(abstract_repo.AbstractRepository):
     def __init__(self):
         self.__games = list()
@@ -85,17 +86,17 @@ class MemoryRepository(abstract_repo.AbstractRepository):
         self.__users.append(user)
 
     def get_user(self, user_name) -> User:
-        pass
         # implementation of get_user
         # CWA implementation below
-        # return next((user for user in self.__users if user.user_name == user_name), None)
+        return next((user for user in self.__users if user.user_name == user_name), None)
 
     def add_review(self, review: Review):
         # call parent class first, add_comment relies on implementation of code common to all derived classes
         self.__reviews.append(review)
 
-    def get_comments(self):
+    def get_reviews(self):
         return self.__reviews
+
 
 def populate(data_path, repo: MemoryRepository):
     filename = str(Path(data_path) / "games.csv")
@@ -107,4 +108,3 @@ def populate(data_path, repo: MemoryRepository):
 
     for genre in file_reader.dataset_of_genres:
         repo.add_genre(genre)
-
