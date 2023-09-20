@@ -37,7 +37,7 @@ def get_user(user_name: str, repo: AbstractRepository):
 
     # user to dict
     user_dict = {
-        'user_name': user.user_name,
+        'user_name': user.username,
         'password': user.password
     }
 

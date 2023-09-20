@@ -86,10 +86,10 @@ class MemoryRepository(abstract_repo.AbstractRepository):
     def add_user(self, user: User):
         self.__users.append(user)
 
-    def get_user(self, user_name) -> User:
+    def get_user(self, username) -> User:
         # implementation of get_user
         # CWA implementation below
-        return next((user for user in self.__users if user.user_name == user_name), None)
+        return next((user for user in self.__users if user.username == username), None)
 
     def add_review(self, review: Review):
         # call parent class first, add_comment relies on implementation of code common to all derived classes
