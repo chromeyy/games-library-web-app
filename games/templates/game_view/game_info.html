@@ -34,7 +34,6 @@
                 </div>
                 {% block review %}
                 <div id="create-review">
-{#                    <button style="" class="" onclick="location.href='{{ url_for() }}'">Make a review</button>#}
                     <button onclick="location.href='{{ url_for('game_info_bp.review_game', game_id = game.game_id) }}'">Make a review</button>
                 </div>
                 {% endblock %}

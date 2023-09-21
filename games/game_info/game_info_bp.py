@@ -35,16 +35,22 @@ def review_game():
         game_id = int(form.game_id.data)
 
         # Use the service layer to store the new comment.
-        services.add_review(game_id, form.rating.data, form.review.data, user_name, repo.repo_instance)
+        services.add_review(game_id, form.rating.data, form.review_game.data, user_name, repo.repo_instance)
 
         # Retrieve the article in dict form.
-        article = services.get_game_by_id(game_id, repo.repo_instance)
+        game = services.get_game_by_id(game_id, repo.repo_instance)
 
         # Cause the web browser to display the page of all articles that have the same date as the commented article,
         # and display all comments, including the new comment.
-        return redirect(url_for('news_bp.articles_by_date', date=article['date'], view_comments_for=game_id))
+        return redirect(url_for('game_info_bp.game_info', game_id=game_id))
 
-    game_id = request.args.get('game_id')
+    if request.method == 'GET':
+        game_id = int(request.args.get('game_id'))
+        form.game_id.data = game_id
+
+    else:
+        game_id = int(form.game_id.data)
+
     game = services.get_game_by_id(game_id, repo.repo_instance)
 
     return render_template('game_view/review.html', game=game, form=form)
