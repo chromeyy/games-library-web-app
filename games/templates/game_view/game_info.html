@@ -24,7 +24,17 @@
                 <br>
                 <h3>Game Description:</h3>
                 <p id="game-description">{{ game.description }}</p>
-                <h4>Ratings:</h4>
+                <div id="reviews">
+                    <h4>reviews:</h4>
+                    <h4>Avg rating: 5</h4>
+{#                    the list of reviews for game will be here and average rating#}
+                </div>
+                {% block review %}
+                <div id="create-review">
+{#                    <button style="" class="" onclick="location.href='{{ url_for() }}'">Make a review</button>#}
+                    <button onclick="location.href='{{ url_for('game_info_bp.review_game', game_id = game.game_id) }}'">Make a review</button>
+                </div>
+                {% endblock %}
             </div>
         </div>
         <br/>
