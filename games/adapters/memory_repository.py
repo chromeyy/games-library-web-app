@@ -92,8 +92,9 @@ class MemoryRepository(abstract_repo.AbstractRepository):
         return next((user for user in self.__users if user.username == username), None)
 
     def add_review(self, review: Review):
-        # call parent class first, add_comment relies on implementation of code common to all derived classes
         self.__reviews.append(review)
+        review.game.reviews.append(review)
+        review.user.reviews.append(review)
 
     def get_reviews(self):
         return self.__reviews
