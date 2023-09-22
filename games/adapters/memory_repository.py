@@ -126,8 +126,6 @@ def load_users(data_path: Path, repo: MemoryRepository):
 
 
 def load_reviews(data_path: Path, repo: MemoryRepository, users):
-    reviews = dict()
-
     reviews_filename = str(Path(data_path) / "reviews.csv")
     for data_row in read_csv_file(reviews_filename):
         review = Review(
@@ -138,9 +136,6 @@ def load_reviews(data_path: Path, repo: MemoryRepository, users):
         )
         users[data_row[1]].add_review(review)
         repo.add_review(review)
-        reviews[data_row[0]] = review
-
-    return reviews
 
 
 def load_favourites(data_path: Path, repo: MemoryRepository, users):
