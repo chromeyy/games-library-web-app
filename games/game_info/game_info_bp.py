@@ -29,10 +29,12 @@ def review_game():
     game_id = int(request.args.get('game_id'))
     game = services.get_game_by_id(game_id, repo.repo_instance)
 
-    user = services.get_user(username, repo.repo_instance)
-    for review in game.reviews:
-        if review.user == user:
-            return redirect(url_for('game_info_bp.game_info', game_id=game_id))
+    # Implementation below of user can only review once
+
+    # user = services.get_user(username, repo.repo_instance)
+    # for review in game.reviews:
+    #     if review.user == user:
+    #         return redirect(url_for('game_info_bp.game_info', game_id=game_id))
 
     # Create form
     form = ReviewForm()
