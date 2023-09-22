@@ -219,6 +219,31 @@ ul {
     padding: 5px;
 }
 
+#review-button {
+    background-color: #8EB69B;
+    color: #fff;
+    border: solid;
+    border-radius: 6px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+#favourite-button {
+    background-color: #8EB69B;
+    color: #ffffff;
+    border: solid;
+    border-radius: 6px;
+    padding: 2px;
+}
+
+#unfavourite-button {
+    background-color: #ffffff;
+    color: #8EB69B;
+    border: solid;
+    border-radius: 6px;
+    padding: 2px;
+}
+
 #page-val {
     padding: 0;
     margin-top: -40px;

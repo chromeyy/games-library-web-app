@@ -3,16 +3,18 @@
 {% block main %}
 <main>
     <div id="game-info-container">
-        <h3 id="game-title">{{ game.title }}</h3>
+        <div id="title-wrapper">
+            <h3 id="game-title">{{ game.title }}</h3>
+        </div>
         {% if is_favourite %}
-        <div id="favourites-wrapper">
+        <div id="favourites-wrapper" style="float:right; text-align: right; margin-right: 100px;">
             <p class="favourite-detail">IN FAVOURITES</p>
-            <button onclick="location.href='{{ url_for('game_info_bp.unfavourite_game', game_id = game.game_id) }}'">Remove from favourites</button>
+            <button id="unfavourite-button" onclick="location.href='{{ url_for('game_info_bp.unfavourite_game', game_id = game.game_id) }}'">Remove from favourites</button>
         </div>
         {% else %}
-        <div id="favourites-wrapper">
+        <div id="favourites-wrapper" style="float:right; text-align: right; margin-right: 100px;">
             <p class="favourite-detail">LIKE THE GAME?</p>
-            <button onclick="location.href='{{ url_for('game_info_bp.favourite_game', game_id = game.game_id) }}'">Add to favourites</button>
+            <button id="favourite-button" onclick="location.href='{{ url_for('game_info_bp.favourite_game', game_id = game.game_id) }}'">Add to favourites</button>
         </div>
         {% endif %}
         <div id="game-detail-container">
@@ -35,21 +37,24 @@
                 <br>
                 <h3>Game Description:</h3>
                 <p id="game-description">{{ game.description }}</p>
-                <div id="reviews">
-                    <h4>reviews:</h4>
+                <div id="review-container">
+                    <h3>Reviews:</h3>
                     <h4>Avg rating: {{ average_rating }}</h4>
 {#                    the list of reviews for game will be here and average rating#}
-                    {% if game.reviews %}
-                        {% for review in game.reviews %}
-                            <p>{{ review.comment }}, {{ review.rating }}, {{ review.user.username }}</p>
-                        {% endfor %}
-                    {% else %}
-                        <p>No reviews</p>
-                    {% endif %}
+                    <div id="reviews">
+                        {% if game.reviews %}
+                            {% for review in game.reviews %}
+                                <p style="font-size: medium; text-indent: 50px"><span class="game-detail-label" style="font-size: medium;">User:</span> {{ review.user.username }} <span class="game-detail-label" style="font-size: medium;">Rating:</span> {{ review.rating }} "{{ review.comment }}"</p>
+                            {% endfor %}
+                        {% else %}
+                            <p style="font-size: smaller; text-indent: 50px">No reviews</p>
+                        {% endif %}
+                    </div>
                 </div>
+                <br>
                 {% block review %}
                 <div id="create-review">
-                    <button onclick="location.href='{{ url_for('game_info_bp.review_game', game_id = game.game_id) }}'">Make a review</button>
+                    <button id="review-button" onclick="location.href='{{ url_for('game_info_bp.review_game', game_id = game.game_id) }}'">Make a review</button>
                 </div>
                 {% endblock %}
             </div>
