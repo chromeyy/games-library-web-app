@@ -136,7 +136,6 @@ def load_reviews(data_path: Path, repo: MemoryRepository, users):
             int(data_row[3]),
             data_row[4]
         )
-        repo.get_game_by_id(data_row[2]).reviews.append(review)
         users[data_row[1]].add_review(review)
         repo.add_review(review)
         reviews[data_row[0]] = review
