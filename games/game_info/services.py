@@ -30,3 +30,17 @@ def add_review(game_id: int, rating: int, review_text: str, user_name: str, repo
 
     review = Review(user, game, rating, review_text)
     repo.add_review(review)
+
+
+def add_game_to_favourites(game_id: int, user_name: str, repo: AbstractRepository):
+    user = repo.get_user(user_name)
+    game = repo.get_game_by_id(game_id)
+    user.add_favourite_game(game)
+    print(user.favourite_games)
+
+
+def remove_game_from_favourites(game_id: int, user_name: str, repo: AbstractRepository):
+    user = repo.get_user(user_name)
+    game = repo.get_game_by_id(game_id)
+    user.remove_favourite_game(game)
+    print(user.favourite_games)

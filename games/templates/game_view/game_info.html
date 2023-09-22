@@ -4,6 +4,17 @@
 <main>
     <div id="game-info-container">
         <h3 id="game-title">{{ game.title }}</h3>
+        {% if is_favourite %}
+        <div id="favourites-wrapper">
+            <p class="favourite-detail">IN FAVOURITES</p>
+            <button onclick="location.href='{{ url_for('game_info_bp.unfavourite_game', game_id = game.game_id) }}'">Remove from favourites</button>
+        </div>
+        {% else %}
+        <div id="favourites-wrapper">
+            <p class="favourite-detail">LIKE THE GAME?</p>
+            <button onclick="location.href='{{ url_for('game_info_bp.favourite_game', game_id = game.game_id) }}'">Add to favourites</button>
+        </div>
+        {% endif %}
         <div id="game-detail-container">
             <img id="game-image" src="{{ game.image_url }}" alt="game_image">
 
@@ -28,9 +39,13 @@
                     <h4>reviews:</h4>
                     <h4>Avg rating: {{ average_rating }}</h4>
 {#                    the list of reviews for game will be here and average rating#}
-                    {% for review in game.reviews %}
-                    <p>{{ review.comment }}, {{ review.rating }}, {{ review.user.username }}</p>
-                    {% endfor %}
+                    {% if game.reviews %}
+                        {% for review in game.reviews %}
+                            <p>{{ review.comment }}, {{ review.rating }}, {{ review.user.username }}</p>
+                        {% endfor %}
+                    {% else %}
+                        <p>No reviews</p>
+                    {% endif %}
                 </div>
                 {% block review %}
                 <div id="create-review">

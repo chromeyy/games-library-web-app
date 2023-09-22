@@ -22,7 +22,13 @@ def game_info():
         all_ratings = [review.rating for review in game.reviews]
         average_rating = str(round(sum(all_ratings) / len(all_ratings), 3))
 
-    return render_template('game_view/game_info.html', game=game, average_rating=average_rating)
+    is_favourite = False
+    if 'user_name' in session:
+        username = session['user_name']
+        user = services.get_user(username, repo.repo_instance)
+        is_favourite = game in user.favourite_games
+
+    return render_template('game_view/game_info.html', game=game, average_rating=average_rating, is_favourite=is_favourite)
 
 
 @game_info_bp.route('/game_info/review_game', methods=['GET', 'POST'])
@@ -38,6 +44,9 @@ def review_game():
     if len(game.reviews) > 0:
         all_ratings = [review.rating for review in game.reviews]
         average_rating = str(round(sum(all_ratings) / len(all_ratings), 3))
+
+    user = services.get_user(username, repo.repo_instance)
+    is_favourite = game in user.favourite_games
 
     # Implementation below of user can only review once
 
@@ -56,7 +65,25 @@ def review_game():
 
         return redirect(url_for('game_info_bp.game_info', game_id=game_id))
 
-    return render_template('game_view/review.html', game=game, average_rating=average_rating, form=form)
+    return render_template('game_view/review.html', game=game, average_rating=average_rating, is_favourite=is_favourite, form=form)
+
+
+@game_info_bp.route('/game_info/favourite_game')
+@login_required
+def favourite_game():
+    user_name = username = session['user_name']
+    game_id = int(request.args.get('game_id'))
+    services.add_game_to_favourites(game_id, user_name, repo.repo_instance)
+    return redirect(url_for('game_info_bp.game_info', game_id=game_id))
+
+
+@game_info_bp.route('/game_info/unfavourite_game')
+@login_required
+def unfavourite_game():
+    user_name = username = session['user_name']
+    game_id = int(request.args.get('game_id'))
+    services.remove_game_from_favourites(game_id, user_name, repo.repo_instance)
+    return redirect(url_for('game_info_bp.game_info', game_id=game_id))
 
 
 class ReviewForm(FlaskForm):
