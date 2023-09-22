@@ -14,10 +14,15 @@ game_info_bp = Blueprint('game_info_bp', __name__)
 @game_info_bp.route('/game_info')
 def game_info():
 
-    game_id = request.args.get('game_id')
+    game_id = int(request.args.get('game_id'))
     game = services.get_game_by_id(game_id, repo.repo_instance)
 
-    return render_template('game_view/game_info.html', game=game)
+    average_rating = 'N/A'
+    if len(game.reviews) > 0:
+        all_ratings = [review.rating for review in game.reviews]
+        average_rating = str(round(sum(all_ratings) / len(all_ratings), 3))
+
+    return render_template('game_view/game_info.html', game=game, average_rating=average_rating)
 
 
 @game_info_bp.route('/game_info/review_game', methods=['GET', 'POST'])
@@ -28,6 +33,11 @@ def review_game():
 
     game_id = int(request.args.get('game_id'))
     game = services.get_game_by_id(game_id, repo.repo_instance)
+
+    average_rating = 'N/A'
+    if len(game.reviews) > 0:
+        all_ratings = [review.rating for review in game.reviews]
+        average_rating = str(round(sum(all_ratings) / len(all_ratings), 3))
 
     # Implementation below of user can only review once
 
@@ -46,7 +56,7 @@ def review_game():
 
         return redirect(url_for('game_info_bp.game_info', game_id=game_id))
 
-    return render_template('game_view/review.html', game=game, form=form)
+    return render_template('game_view/review.html', game=game, average_rating=average_rating, form=form)
 
 
 class ReviewForm(FlaskForm):
