@@ -18,9 +18,7 @@
             {% for review in user.reviews %}
             <li>
                 <a href="{{ url_for('game_info_bp.game_info', game_id = review.game.game_id) }}">
-                    <h3>{{ review.game }}</h3>
-                    <h2>Rating: {{ review.rating }} </h2>
-                    <p>Comment: {{ review.comment }} </p>
+                    <p>{{ review.game.title }} Rating: {{ review.rating }}  Comment: {{ review.comment }} </p>
                 </a>
             </li>
             {% endfor %}
@@ -28,7 +26,7 @@
 
         <h2>Favourites</h2>
         <ul>
-            {% for game in user.favourites %}
+            {% for game in user.favourite_games %}
             <li>
                 <a href="{{ url_for('game_info_bp.game_info', game_id = game.game_id) }}">
                     <h3>{{ game.title }}</h3>
@@ -38,22 +36,22 @@
             {% endfor %}
         </ul>
 
-        <h2>Wishlist</h2>
-        <ul>
-            {% for game in user.favourites %}
-            <li>
-                <a href="{{ url_for('game_info_bp.game_info', game_id = game.game_id) }}">
-                    <h3>{{ game.title }}</h3>
-                    <img src="{{ game.image_url }}" alt="game_image">
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
+{#        <h2>Wishlist</h2>#}
+{#        <ul>#}
+{#            {% for game in user.favourite_games %}#}
+{#            <li>#}
+{#                <a href="{{ url_for('game_info_bp.game_info', game_id = game.game_id) }}">#}
+{#                    <h3>{{ game.title }}</h3>#}
+{#                    <img src="{{ game.image_url }}" alt="game_image">#}
+{#                </a>#}
+{#            </li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
 
 
     </body>
 </main>
-{% end-block %}
+{% endblock %}
 
 <!-- wonder if i need to use {% if 'user_name' in session %} and {{ session['user_name'] }} {%
             endif %} instead of just user. ? -->
