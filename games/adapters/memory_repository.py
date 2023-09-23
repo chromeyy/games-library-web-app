@@ -134,7 +134,6 @@ def load_reviews(data_path: Path, repo: MemoryRepository, users):
             int(data_row[3]),
             data_row[4]
         )
-        users[data_row[1]].add_review(review)
         repo.add_review(review)
 
 
