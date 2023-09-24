@@ -52,5 +52,21 @@ def test_retrieve_games_by_search(in_memory_repo):
 
 
 def test_retrieve_game_by_genre(in_memory_repo):
-    print(str(sorted(in_memory_repo.get_games_by_genre("RPG"))[:3]))
     assert str(sorted(in_memory_repo.get_games_by_genre("RPG"))[:3]) == "[<Game 65600, Gothic 3: Forsaken Gods Enhanced Edition>, <Game 201010, Geneforge 5: Overthrow>, <Game 226620, Desktop Dungeons>]"
+
+
+def test_get_add_user(in_memory_repo):
+    new_user = User("new_user", "12345securepassword")
+    in_memory_repo.add_user(new_user)
+    assert in_memory_repo.get_user("new_user") == new_user
+    # Tests repo can add a user and get a user
+
+
+def test_get_add_review(in_memory_repo):
+    new_user = User("new_user", "12345securepassword")
+    new_review = Review(new_user, Game(12345, "new_game"), 5, "Great game!")
+    in_memory_repo.add_review(new_review)
+    assert new_review in in_memory_repo.get_reviews()
+    assert str(in_memory_repo.get_reviews()[3:]) == '[Review(User: <User new_user>, Game: <Game 12345, new_game>, Rating: 5, Comment: Great game!)]'
+    # Tests repo can add a review and get all reviews
+

@@ -88,7 +88,6 @@ class MemoryRepository(abstract_repo.AbstractRepository):
 
     def get_user(self, username) -> User:
         # implementation of get_user
-        # CWA implementation below
         return next((user for user in self.__users if user.username == username), None)
 
     def add_review(self, review: Review):
