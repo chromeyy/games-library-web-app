@@ -391,3 +391,26 @@ h3 {
 #profile-favourites a {
     text-decoration: none;
 }
+
+#comment {
+    resize: false;
+    width: 80%;
+    min-height: 100px;
+    padding: 15px;
+    background-color: #8EB69B;
+    color: #fff;
+    border: solid #18392B;
+    border-radius: 5px;
+    margin: 20px;
+    margin-bottom: 0;
+}
+
+#rating {
+    background-color: #8EB69B;
+    color: #fff;
+    border: solid #18392B;
+    border-radius: 5px;
+    display: block;
+    margin-left: 20px;
+}
+
