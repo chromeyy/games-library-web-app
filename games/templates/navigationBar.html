@@ -10,11 +10,13 @@
         <ul>
             <li><a href="{{ url_for('index_bp.index') }}">Home</a></li>
             <li><a href="{{ url_for('user_info_bp.user_info') }}">Profile</a></li>
+            <li><a href="{{ url_for('game_library_bp.game_library', selected_genre = 'all', current_page=0) }}">All Games</a></li>
+            <li><br></li>
+        </ul>
+        <ul id="reg-login-logout">
             <li><a href="{{ url_for('authentication_bp.register') }}">Register</a></li>
             <li><a href="{{ url_for('authentication_bp.login') }}">Login</a></li>
             <li><a href="{{ url_for('authentication_bp.logout') }}">Logout</a></li>
-{#            <li><a href="{{ url_for('user_info_bp.user_info') }}">My Profile</a></li>#}
-            <li><a href="{{ url_for('game_library_bp.game_library', selected_genre = 'all', current_page=0) }}">All Games</a></li>
         </ul>
         <div id="nav-footer">
         &copy; TVK
