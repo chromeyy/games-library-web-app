@@ -4,6 +4,8 @@ from games.domainmodel.model import *
 
 from games.game_info import services as games_info_services
 from games.game_library import services as games_library_services
+from games.authentication import services as auth_services
+from games.user_info import services as user_info_services
 
 
 @pytest.fixture()
@@ -20,6 +22,22 @@ def list_of_genres():
 def test_game_info_retrieve_game(in_memory_repo):
     game = games_info_services.get_game_by_id(267360, in_memory_repo)
     assert game == Game(267360, "MURI")
+
+
+def test_game_info_add_review():
+    pass
+
+
+def test_game_info_add_game_to_favourites():
+    pass
+
+
+def test_game_info_remove_game_from_favourites():
+    pass
+
+
+def test_game_info_add_user():
+    pass
 
 
 # testing services for game_library
@@ -93,4 +111,26 @@ def test_game_library_alpha_sort_genres(list_of_genres):
     assert str(list_of_genres) == "[<Genre A>, <Genre B>, <Genre C>, <Genre D>]"
 
 
-# Test inserting non-existing search key throws exception
+def test_user_info_get_user():
+    pass
+
+
+def test_auth_add_user():
+    pass
+
+
+def test_auth_add_user_with_same_name():
+    # testing cannot add user with the same name
+    pass
+
+
+def test_auth_get_user():
+    pass
+
+
+def test_auth_with_valid_credentials():
+    pass
+
+
+def test_auth_with_invalid_credentials():
+    pass
