@@ -20,3 +20,37 @@ def test_register(client):
     # weird, change this testing, for some reason, it throws an error when attempting to access 'Location' in response.headers
 
 
+def test_register_with_invalid_input(client, user_name, password, message):
+    pass
+
+
+def test_login(client, auth):
+    pass
+
+
+def test_logout(client, auth):
+    pass
+
+
+def test_index(client):
+    pass
+
+
+def test_login_required_to_review(client):
+    pass
+
+
+def test_review(client, auth):
+    pass
+
+
+def test_review_with_invalid_input(client, auth, comment, messages):
+    pass
+
+
+def test_game_library(client):
+    pass
+
+
+def test_login_required_to_favourite(client):
+    pass
