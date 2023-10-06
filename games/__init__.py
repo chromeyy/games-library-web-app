@@ -2,9 +2,11 @@
 
 from pathlib import Path
 import games.adapters.repository as repo
-from games.adapters.memory_repository import MemoryRepository, populate
+from games.adapters.memory_repository import MemoryRepository
+from games.adapters.repository_populate import populate
 
 from flask import Flask
+
 
 def create_app(test_config=None):
     """Construct the core application."""
@@ -24,7 +26,7 @@ def create_app(test_config=None):
 
     # Create the MemoryRepository implementation for a memory-based repository.
     repo.repo_instance = MemoryRepository()
-    # fill the content of the repository from the provided csv files
+    # fill in the content of the repository from the provided csv files
     populate(data_path, repo.repo_instance)
 
     # Build the application - these steps require an application context.
