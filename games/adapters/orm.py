@@ -44,14 +44,14 @@ users_table = Table(
     'users', metadata,
     Column('user_id', Integer, primary_key=True, autoincrement=True),
     Column('username', String(64), nullable=False),
-    Column('password', String(64), nullable=False),
+    Column('password', String(64), nullable=False)
 )
 
 favourites_table = Table(
     'favourites', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
     Column('user_id', ForeignKey('users.user_id')),
-    Column('game_ids', Text, nullable=True)
+    Column('game_id', ForeignKey('games.game_id'))
 )
 
 reviews_table = Table(
@@ -66,7 +66,7 @@ reviews_table = Table(
 
 def map_model_to_tables():
     mapper(model.Publisher, publishers_table, properties={
-        '_Publisher__publisher_name': publishers_table.c.name,
+        '_Publisher__publisher_name': publishers_table.c.name
     })
 
     mapper(model.Game, games_table, properties={
@@ -83,19 +83,20 @@ def map_model_to_tables():
     })
 
     mapper(model.Genre, genres_table, properties={
-        '_Genre__genre_name': genres_table.c.genre_name,
+        '_Genre__genre_name': genres_table.c.genre_name
     })
 
     mapper(model.User, users_table, properties={
         '_User__user_id': users_table.c.user_id,
         '_User__username': users_table.c.username,
         '_User__password': users_table.c.password,
-        '_User__reviews': relationship(model.Review, back_populates='_Review__user')
+        '_User__reviews': relationship(model.Review, back_populates='_Review__user'),
+        '_User__favourites': relationship(model.Game, secondary=favourites_table)
     })
 
     mapper(model.Review, reviews_table, properties={
         '_Review__comment': reviews_table.c.review_text,
         '_Review__rating': reviews_table.c.rating,
         '_Review__user': relationship(model.User, back_populates='_User__reviews'),
-        '_Review__game': relationship(model.Game, back_populates='_Game__reviews'),
+        '_Review__game': relationship(model.Game, back_populates='_Game__reviews')
     })

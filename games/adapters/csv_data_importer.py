@@ -45,5 +45,4 @@ def load_reviews(data_path: Path, repo: AbstractRepository, users):
 def load_favourites(data_path: Path, repo: AbstractRepository, users):
     favourites_filename = str(Path(data_path) / "favourites.csv")
     for data_row in read_csv_file(favourites_filename):
-        for game_id in data_row[2].split(','):
-            users[data_row[1]].add_favourite_game(repo.get_game_by_id(game_id))
+        users[data_row[1]].add_favourite_game(repo.get_game_by_id(data_row[2]))
