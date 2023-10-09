@@ -50,7 +50,7 @@ class SqlAlchemyRepository(abstract_repo.AbstractRepository):
         self._session_cm.reset_session()
 
     def get_games_by_genre(self, selected_genre='all'):
-        pass
+        return self._session_cm.session.query(Game).all()
 
     def get_games_by_publisher(self, selected_publisher='all'):
         pass
@@ -72,7 +72,7 @@ class SqlAlchemyRepository(abstract_repo.AbstractRepository):
             scm.commit()
 
     def get_list_of_genres(self):
-        pass
+        return self._session_cm.session.query(Genre).all()
 
     def add_user(self, user: User):
         with self._session_cm as scm:
