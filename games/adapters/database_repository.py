@@ -79,7 +79,8 @@ class SqlAlchemyRepository(abstract_repo.AbstractRepository):
             scm.commit()
 
     def get_game_by_id(self, game_id) -> Game:
-        pass
+        game = self._session_cm.session.query(Game).filter(Game._Game__game_id == game_id).one()
+        return game
 
     def add_genre(self, genre):
         with self._session_cm as scm:
@@ -91,13 +92,13 @@ class SqlAlchemyRepository(abstract_repo.AbstractRepository):
 
     def add_user(self, user: User):
         with self._session_cm as scm:
-            scm.session.merge(user)
+            scm.session.add(user)
             scm.commit()
 
     def get_user(self, username) -> User:
         user = None
         try:
-            user = self._session_cm.session.query(User).filter(User._User__user_name == username).one()
+            user = self._session_cm.session.query(User).filter(User._User__username == username).one()
         except NoResultFound:
             # Ignore any exception and return None.
             pass
