@@ -9,13 +9,13 @@ def populate(data_path, repo: AbstractRepository):
     file_reader = GameFileCSVReader(filename)
     file_reader.read_csv_file()
 
-    users = load_users(data_path, repo)
-
     for game in file_reader.dataset_of_games:
         repo.add_games(game)
 
     for genre in file_reader.dataset_of_genres:
         repo.add_genre(genre)
+
+    users = load_users(data_path, repo)
 
     load_reviews(data_path, repo, users)
     load_favourites(data_path, repo, users)
