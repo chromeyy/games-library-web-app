@@ -50,7 +50,19 @@ class SqlAlchemyRepository(abstract_repo.AbstractRepository):
         self._session_cm.reset_session()
 
     def get_games_by_genre(self, selected_genre='all'):
-        return self._session_cm.session.query(Game).all()
+        if selected_genre == 'all':
+            # If selected all genres return all games
+            return self._session_cm.session.query(Game).all()
+        else:
+            # Select games by a genre
+            # Get game ids from games genres table that are related to the selected genre
+            game_ids = self._session_cm.session.execute('SELECT game_id FROM game_genres WHERE genre_name = :selected_genre', {'selected_genre': selected_genre}).fetchall()
+            game_ids = [game_id[0] for game_id in game_ids]
+
+            # Query all games that match those ids
+            games = self._session_cm.session.query(Game).filter(Game._Game__game_id.in_(game_ids)).all()
+
+            return games
 
     def get_games_by_publisher(self, selected_publisher='all'):
         pass
