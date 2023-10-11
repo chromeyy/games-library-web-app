@@ -71,7 +71,36 @@ class SqlAlchemyRepository(abstract_repo.AbstractRepository):
         pass
 
     def get_games_by_search(self, search_category='title', search_term=''):
-        pass
+        games = list()
+
+        def get_games_by_fetched_ids(ids):
+            if not ids:
+                return []
+            ids = [game_id[0] for game_id in ids]
+            return self._session_cm.session.query(Game).filter(Game._Game__game_id.in_(ids)).all()
+
+        if search_term == '':
+            return self._session_cm.session.query(Game).all()
+
+        elif search_category == 'Title':
+            search_title = '%' + search_term + '%'
+            game_ids = self._session_cm.session.execute('SELECT game_id FROM games WHERE genre_name LIKE search_title',
+                                                        {'search_title': search_title}).fetchall()
+            games = get_games_by_fetched_ids(game_ids)
+
+        elif search_category == 'Genre':
+            search_genre = '%' + search_term + '%'
+            game_ids = self._session_cm.session.execute('SELECT game_id FROM game_genres WHERE genre_name LIKE :search_genre',
+                                                        {'search_genre': search_genre}).fetchall()
+            games = get_games_by_fetched_ids(game_ids)
+
+        elif search_category == 'Publisher':
+            search_publisher = '%' + search_term + '%'
+            game_ids = self._session_cm.session.execute('SELECT game_id FROM games WHERE publisher_name LIKE :search_publisher',
+                                                        {'search_publisher': search_publisher}).fetchall()
+            games = get_games_by_fetched_ids(game_ids)
+
+        return games
 
     def add_games(self, game):
         with self._session_cm as scm:
