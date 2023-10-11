@@ -84,7 +84,7 @@ class SqlAlchemyRepository(abstract_repo.AbstractRepository):
 
         elif search_category == 'Title':
             search_title = '%' + search_term + '%'
-            game_ids = self._session_cm.session.execute('SELECT game_id FROM games WHERE genre_name LIKE search_title',
+            game_ids = self._session_cm.session.execute('SELECT game_id FROM games WHERE game_title LIKE :search_title',
                                                         {'search_title': search_title}).fetchall()
             games = get_games_by_fetched_ids(game_ids)
 
@@ -108,8 +108,11 @@ class SqlAlchemyRepository(abstract_repo.AbstractRepository):
             scm.commit()
 
     def get_game_by_id(self, game_id) -> Game:
-        game = self._session_cm.session.query(Game).filter(Game._Game__game_id == game_id).one()
-        return game
+        try:
+            game = self._session_cm.session.query(Game).filter(Game._Game__game_id == game_id).one()
+            return game
+        except NoResultFound:
+            return None
 
     def add_genre(self, genre):
         with self._session_cm as scm:
@@ -140,4 +143,4 @@ class SqlAlchemyRepository(abstract_repo.AbstractRepository):
             scm.commit()
 
     def get_reviews(self):
-        pass
+        return self._session_cm.session.query(Review).all()
