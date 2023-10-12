@@ -1,7 +1,7 @@
 from games.adapters.repository import AbstractRepository
 from pathlib import Path
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
-from games.adapters.csv_data_importer import load_users, load_reviews, load_favourites
+from games.adapters.csv_data_importer import load_users, load_reviews
 
 
 def populate(data_path, repo: AbstractRepository):
@@ -18,4 +18,3 @@ def populate(data_path, repo: AbstractRepository):
     users = load_users(data_path, repo)
 
     load_reviews(data_path, repo, users)
-    # load_favourites(data_path, repo, users)

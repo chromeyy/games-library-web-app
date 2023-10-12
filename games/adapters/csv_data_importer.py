@@ -34,8 +34,6 @@ def load_users(data_path: Path, repo: AbstractRepository):
         username = users_map[data_row[1]].username
         user = next((user for user in users if user.username == username), None)
         user.add_favourite_game(repo.get_game_by_id(data_row[2]))
-        print(user)
-        print(data_row)
 
     for user in users:
         repo.add_user(user)
@@ -53,10 +51,3 @@ def load_reviews(data_path: Path, repo: AbstractRepository, users):
             data_row[4]
         )
         repo.add_review(review)
-
-
-def load_favourites(data_path: Path, repo: AbstractRepository, users):
-    favourites_filename = str(Path(data_path) / "favourites.csv")
-    for data_row in read_csv_file(favourites_filename):
-        username = users[data_row[1]].username
-        repo.get_user(username).add_favourite_game(repo.get_game_by_id(data_row[2]))
