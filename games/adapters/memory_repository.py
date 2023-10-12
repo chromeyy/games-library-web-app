@@ -85,6 +85,9 @@ class MemoryRepository(abstract_repo.AbstractRepository):
         # implementation of get_user
         return next((user for user in self.__users if user.username == username), None)
 
+    def update_user(self, user):
+        pass
+
     def add_review(self, review: Review):
         self.__reviews.append(review)
         review.game.reviews.append(review)

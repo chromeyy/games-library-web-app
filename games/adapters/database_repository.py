@@ -137,6 +137,11 @@ class SqlAlchemyRepository(abstract_repo.AbstractRepository):
 
         return user
 
+    def update_user(self, user):
+        with self._session_cm as scm:
+            scm.session.merge(user)
+            scm.commit()
+
     def add_review(self, review: Review):
         with self._session_cm as scm:
             scm.session.merge(review)

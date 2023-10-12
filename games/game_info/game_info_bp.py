@@ -71,7 +71,7 @@ def review_game():
 @game_info_bp.route('/game_info/favourite_game')
 @login_required
 def favourite_game():
-    user_name = username = session['user_name']
+    user_name = session['user_name']
     game_id = int(request.args.get('game_id'))
     services.add_game_to_favourites(game_id, user_name, repo.repo_instance)
     return redirect(url_for('game_info_bp.game_info', game_id=game_id))
@@ -80,7 +80,7 @@ def favourite_game():
 @game_info_bp.route('/game_info/unfavourite_game')
 @login_required
 def unfavourite_game():
-    user_name = username = session['user_name']
+    user_name = session['user_name']
     game_id = int(request.args.get('game_id'))
     services.remove_game_from_favourites(game_id, user_name, repo.repo_instance)
     return redirect(url_for('game_info_bp.game_info', game_id=game_id))

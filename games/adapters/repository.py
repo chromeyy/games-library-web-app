@@ -12,6 +12,10 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def update_user(self, user):
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def add_games(self, game):
         raise NotImplementedError
 
