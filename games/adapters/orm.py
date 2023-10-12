@@ -91,7 +91,7 @@ def map_model_to_tables():
         '_User__username': users_table.c.username,
         '_User__password': users_table.c.password,
         '_User__reviews': relationship(model.Review, back_populates='_Review__user'),
-        '_User__favourites': relationship(model.Game, secondary=favourites_table)
+        '_User__favourite_games': relationship(model.Game, secondary=favourites_table)
     })
 
     mapper(model.Review, reviews_table, properties={
