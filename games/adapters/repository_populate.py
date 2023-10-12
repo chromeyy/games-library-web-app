@@ -18,4 +18,4 @@ def populate(data_path, repo: AbstractRepository):
     users = load_users(data_path, repo)
 
     load_reviews(data_path, repo, users)
-    load_favourites(data_path, repo, users)
+    # load_favourites(data_path, repo, users)

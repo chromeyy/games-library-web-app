@@ -17,17 +17,30 @@ def read_csv_file(filename: str):
 
 
 def load_users(data_path: Path, repo: AbstractRepository):
-    users = dict()
+    users_map = dict()
 
+    users = list()
     users_filename = str(Path(data_path) / "users.csv")
     for data_row in read_csv_file(users_filename):
         user = User(
             username=data_row[1],
             password=generate_password_hash(data_row[2])
         )
+        users.append(user)
+        users_map[data_row[0]] = user
+
+    favourites_filename = str(Path(data_path) / "favourites.csv")
+    for data_row in read_csv_file(favourites_filename):
+        username = users_map[data_row[1]].username
+        user = next((user for user in users if user.username == username), None)
+        user.add_favourite_game(repo.get_game_by_id(data_row[2]))
+        print(user)
+        print(data_row)
+
+    for user in users:
         repo.add_user(user)
-        users[data_row[0]] = user
-    return users
+
+    return users_map
 
 
 def load_reviews(data_path: Path, repo: AbstractRepository, users):
