@@ -37,16 +37,14 @@ def test_repository_can_get_list_of_users(session_factory):  #NOT COMPLETE
     users = repo.get_users()
     assert len(users) == xxx #DOTHIS
 
-# REVIEW TESTS
-def test_repository_can_add_review(session_factory): #DID NOT DO GAME PROPERLY
-    repo = SqlAlchemyRepository(session_factory)
 
-    review = Review(
-        'tori',
-        'game',
-        '4',
-        'this is great!'
-    )
+# REVIEW TESTS
+def test_repository_can_add_review(session_factory): #NOT FINISHED
+    repo = SqlAlchemyRepository(session_factory)
+    test_user = User('test', 'test_password')
+    test_game = Game(100010001, 'test')
+    review = Review(test_user, test_game, 1, "test_comment")
+
 
 def test_repository_can_get_reviews(session_factory): #NOT COMPLETE
     repo = SqlAlchemyRepository(session_factory)

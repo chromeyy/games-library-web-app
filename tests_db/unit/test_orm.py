@@ -2,7 +2,7 @@ import pytest
 import datetime
 from sqlalchemy.exc import IntegrityError
 
-from games.domainmodel.model import User
+from games.domainmodel.model import User, Genre, Review, Game
 
 
 # USER
@@ -66,7 +66,8 @@ def insert_genres(empty_session, values):
 
 
 def make_genre():
-    pass
+    genre = Genre("test_genre")
+    return genre
 
 
 # REVIEW
@@ -79,7 +80,10 @@ def insert_reviews(empty_session, values):
 
 
 def make_review():
-    pass
+    test_user = User('test', 'test_password')
+    test_game = Game(100010001, 'test')
+    review = Review(test_user, test_game, 1, "test_comment")
+    return review
 
 
 def test_saving_review(empty_session):
@@ -96,10 +100,6 @@ def insert_favourite(empty_session, values=None):
 
 
 def insert_favourites(empty_session, values):
-    pass
-
-
-def make_favourite():
     pass
 
 
@@ -122,7 +122,8 @@ def insert_games(empty_session, values):
 
 
 def make_game():
-    pass
+    game = Game(100196, 'test_game')
+    return game
 
 
 def test_saving_game(empty_session):
