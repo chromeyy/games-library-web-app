@@ -2,26 +2,58 @@ import pytest
 import datetime
 from sqlalchemy.exc import IntegrityError
 
+from games.domainmodel.model import User
+
 
 # USER
 def insert_user(empty_session, values=None):
-    pass
+    new_name = "testuser"
+    new_password = "test123"
 
+    if values is not None:
+        new_name = values[0]
+        new_password = values[1]
+
+    empty_session.execute('INSERT INTO users (user_name, password) VALUES (:user_name, :password)',
+                          {'user_name': new_name, 'password': new_password})
+    row = empty_session.execute('SELECT id from users where user_name = :user_name',
+                                {'user_name': new_name}).fetchone()
+    return row[0]
 
 def insert_users(empty_session, values):
-    pass
+    for value in values:
+        empty_session.execute('INSERT INTO users (user_name, password) VALUES (:user_name, :password)',
+                              {'user_name': value[0], 'password': value[1]})
+    rows = list(empty_session.execute('SELECT id from users'))
+    keys = tuple(row[0] for row in rows)
+    return keys
 
 
 def make_user():
-    pass
+    user = User("test_user", "12345")
+    return user
 
 
 def test_loading_users(empty_session):
-    pass
+    users = list()
+    users.append(("test_user_1", "test1234"))
+    users.append(("test_user_2", "test54321"))
+    insert_users(empty_session, users)
+
+    expected = [
+        User("test_user_1", "test1234"),
+        User("test_user_2", "test54321")
+    ]
+    assert empty_session.query(User).all() == expected
 
 
 def test_saving_users(empty_session):
-    pass
+    user = make_user()
+    empty_session.add(user)
+    empty_session.commit()
+
+    rows = list(empty_session.execute('SELECT user_name, password FROM users'))
+    assert rows == [("test_user", "test1234")]
 
 
 # GENRE
