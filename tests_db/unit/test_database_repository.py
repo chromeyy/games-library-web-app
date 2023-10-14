@@ -1,61 +1,122 @@
+from games.adapters.database_repository import SqlAlchemyRepository
+from games.domainmodel.model import User, Review, Game, Genre, Publisher
+
 
 # USER TESTS
 def test_repository_can_add_a_user(session_factory):
-    pass
+    repo = SqlAlchemyRepository(session_factory)
+
+    user = User('Victor', 'password')
+    repo.add_user(user)
+
+    user2 = User('Tomato', 'password')
+    repo.add_user(user2)
+
+    user3 = repo.get_user('Victor')
+
+    assert user3 == user and user3 is user
 
 def test_repository_can_retrieve_a_user(session_factory):
-    pass
+    repo = SqlAlchemyRepository(session_factory)
+
+    user = repo.get_user('tori')
+    assert user == User('tori', '@Vrya365')
+
 
 def test_repository_can_update_a_user(session_factory):
     pass
 
 def test_repository_does_not_retrieve_a_non_existent_user(session_factory):
-    pass
+    repo = SqlAlchemyRepository(session_factory)
 
-def test_repository_can_get_list_of_users(session_factory):
-    pass
+    user = repo.get_user('PotatoMan')
+    assert user is None
+
+def test_repository_can_get_list_of_users(session_factory):  #NOT COMPLETE
+    repo = SqlAlchemyRepository(session_factory)
+    users = repo.get_users()
+    assert len(users) == xxx #DOTHIS
 
 # REVIEW TESTS
-def test_repository_can_add_review(session_factory):
+def test_repository_can_add_review(session_factory): #DID NOT DO GAME PROPERLY
+    repo = SqlAlchemyRepository(session_factory)
+
+    review = Review(
+        'tori',
+        'game',
+        '4',
+        'this is great!'
+    )
+
+def test_repository_can_get_reviews(session_factory): #NOT COMPLETE
+    repo = SqlAlchemyRepository(session_factory)
+    reviews = repo.get_reviews()
+    assert len(reviews) == xxx #DOTHIS
+
+
+def test_repository_game_has_review(session_factory):#DOTHIS
     pass
 
-def test_repository_can_get_reviews(session_factory):
-    pass
-
-def test_repository_game_has_review(session_factory):
-    pass
-
-def test_repository_user_has_review(session_factory):
+def test_repository_user_has_review(session_factory):#DOTHIS
     pass
 
 # GAME TESTS
 def test_repository_can_add_game(session_factory):
-    pass
+    repo = SqlAlchemyRepository(session_factory)
 
-def test_repository_can_get_game(session_factory):
-    pass
+    game = Game(80085, 'test_game')
+    repo.add_games(game)
+
+    game2 = Game(80086, 'test_game_2')
+    repo.add_games(game2)
+
+    assert repo.get_game_by_id(80085) == game
 
 def test_repository_does_not_get_a_non_existent_game(session_factory):
     pass
 
 def test_repository_can_get_games_by_ids(session_factory):
-    pass
+    repo = SqlAlchemyRepository(session_factory)
+
+    game = Game(80085, 'test_game')
+    repo.add_games(game)
+
+    assert repo.get_game_by_id(80085) == game
 
 def test_repository_does_not_get_games_for_non_existent_id(session_factory):
-    pass
+    repo = SqlAlchemyRepository(session_factory)
+    game = repo.get_game_by_id(19247333348175192)
+    assert game is None
 
 def test_repository_can_get_games_by_genre(session_factory):
-    pass
+    repo = SqlAlchemyRepository(session_factory)
+
+    game = Game(80085, 'test_game')
+    game.add_genre(Genre('Horror'))
+    repo.add_games(game)
+
+
+    assert game in repo.get_games_by_genre('Horror')
 
 def test_repository_returns_an_empty_list_for_non_existent_genre(session_factory):
-    pass
-
+    repo = SqlAlchemyRepository(session_factory)
+    games_list = repo.get_games_by_genre('test_fake_genre12345')
+    assert games_list is None
 
 def test_repository_can_get_games_by_publisher(session_factory):
-    pass
+    repo = SqlAlchemyRepository(session_factory)
+
+    game = Game(80085, 'test_game')
+    game.publisher = (Publisher('test_publisher'))
+    repo.add_games(game)
+
+    assert game in repo.get_games_by_publisher('test_publisher')
+
 
 def test_repository_returns_an_empty_list_for_non_existent_publisher(session_factory):
-    pass
+    repo = SqlAlchemyRepository(session_factory)
+    games_list = repo.get_games_by_publisher('test_fake_publisher12345')
+    assert games_list is None
 
 def test_repository_can_get_games_by_search(session_factory):
     pass
