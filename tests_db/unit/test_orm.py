@@ -16,12 +16,13 @@ def make_user():
     pass
 
 
-def test_loading_of_users(empty_session):
+def test_loading_users(empty_session):
     pass
 
 
-def test_saving_of_users(empty_session):
+def test_saving_users(empty_session):
     pass
+
 
 # GENRE
 def insert_genre(empty_session, values=None):
@@ -49,11 +50,32 @@ def make_review():
     pass
 
 
-def test_saving_of_review(empty_session):
+def test_saving_review(empty_session):
     pass
 
 
 def test_loading_review(empty_session):
+    pass
+
+
+# FAVOURITES
+def insert_favourite(empty_session, values=None):
+    pass
+
+
+def insert_favourites(empty_session, values):
+    pass
+
+
+def make_favourite():
+    pass
+
+
+def test_saving_favourite(empty_session):
+    pass
+
+
+def test_loading_favourite(empty_session):
     pass
 
 
@@ -70,9 +92,17 @@ def insert_games(empty_session, values):
 def make_game():
     pass
 
-def test_saving_of_game(empty_session):
+
+def test_saving_game(empty_session):
     pass
 
 
 def test_loading_game(empty_session):
+    pass
+
+
+def test_saving_game_with_genre(empty_session):
+    pass
+
+def test_loading_game_with_genre(empty_session):
     pass
