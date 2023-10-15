@@ -14,6 +14,7 @@ TEST_DATA_PATH_DATABASE_LIMITED = get_project_root() / "tests" / "data"
 TEST_DATABASE_URI_IN_MEMORY = 'sqlite://'
 TEST_DATABASE_URI_FILE = 'sqlite:///games-test.db'
 
+
 @pytest.fixture
 def database_engine():
     clear_mappers()
@@ -27,9 +28,10 @@ def database_engine():
     # creating SQLAlchemy db repo instance .
     repo_instance = database_repository.SqlAlchemyRepository(session_factory)
     database_mode = True
-    repository_populate.populate(TEST_DATA_PATH_DATABASE_LIMITED, repo_instance, database_mode)
+    repository_populate.populate(TEST_DATA_PATH_DATABASE_LIMITED, repo_instance)
     yield engine
     metadata.drop_all(engine)
+
 
 @pytest.fixture
 def session_factory():
@@ -43,19 +45,19 @@ def session_factory():
     session_factory = sessionmaker(autocommit=False, autoflush=True, bind=engine)
     # Creating SQLAlchemy dbrepo instance
     repo_instance = database_repository.SqlAlchemyRepository(session_factory)
-    database_mode = True
-    repository_populate.populate(TEST_DATA_PATH_DATABASE_FULL, repo_instance, database_mode)
+    repository_populate.populate(TEST_DATA_PATH_DATABASE_FULL, repo_instance)
     yield session_factory
     metadata.drop_all(engine)
 
+
 @pytest.fixture
 def empty_session():
-    clear_mappers() # clearing mappers
+    clear_mappers()  # clearing mappers
     engine = create_engine(TEST_DATABASE_URI_IN_MEMORY)
     metadata.create_all(engine)
     for table in reversed(metadata.sorted_tables):
         engine.execute(table.delete())
-    map_model_to_tables() # mapping
+    map_model_to_tables()  # mapping
     session_factory = sessionmaker(bind=engine)
     yield session_factory()
     metadata.drop_all(engine)
