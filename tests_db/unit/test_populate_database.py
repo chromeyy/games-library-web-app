@@ -7,7 +7,7 @@ from games.domainmodel.model import Review, Game, User, Genre
 def test_database_populate_inspect_table_names(database_engine):
     inspector = inspect(database_engine)
     assert (inspector.get_table_names() == ['favourites', 'game_genres', 'games',
-                                            'genres', 'publishers', 'reviews','users'])
+                                            'genres', 'publishers', 'reviews', 'users'])
 
 
 def test_database_populate_select_all_users(database_engine):
@@ -33,7 +33,6 @@ def test_database_populate_select_all_genres(database_engine):
         select_statement = select([metadata.tables[genres_table]])
         result = connection.execute(select_statement)
 
-
         all_genres = []
         for row in result:
             all_genres.append((row['genre_name']))
@@ -41,7 +40,6 @@ def test_database_populate_select_all_genres(database_engine):
         nr_genres = len(all_genres)
         assert nr_genres == 24
         assert all_genres[0] == 'Action'
-
 
 
 def test_database_populate_select_all_reviews(database_engine):
@@ -72,10 +70,45 @@ def test_database_populate_select_all_games(database_engine):
 
         all_games = []
         for row in result:
-           all_games.append(row['game_title'])
+            all_games.append(row['game_title'])
 
         nr_games = len(all_games)
         assert nr_games == 877
 
         assert all_games[0] == 'Xpand Rally'
 
+
+def test_database_populate_select_all_publishers(database_engine):
+    inspector = inspect(database_engine)
+    name_of_publishers_table = inspector.get_table_names()[4]
+
+    with database_engine.connect() as connection:
+        select_statement = select([metadata.tables[name_of_publishers_table]])
+        result = connection.execute(select_statement)
+
+        all_publishers = []
+        for row in result:
+            all_publishers.append(row['name'])
+
+        nr_publishers = len(all_publishers)
+        assert nr_publishers == 798
+
+        assert all_publishers[0] == 'Activision'
+
+
+def test_database_populate_select_all_game_genres(database_engine):
+    inspector = inspect(database_engine)
+    game_genre_names_table = inspector.get_table_names()[1]
+
+    with database_engine.connect() as connection:
+        select_statement = select([metadata.tables[game_genre_names_table]])
+        result = connection.execute(select_statement)
+
+        all_game_genres = []
+        for row in result:
+            all_game_genres.append(row['genre_name'])
+
+        nr_game_genres = len(all_game_genres)
+        assert nr_game_genres == 2507
+
+        assert all_game_genres[0] == 'Action'
