@@ -22,16 +22,6 @@ class MemoryRepository(abstract_repo.AbstractRepository):
                         break
         return games_dataset
 
-    def get_games_by_publisher(self, selected_publisher='all'):
-        if selected_publisher == 'all':
-            games_dataset = self.__games.copy()
-        else:
-            games_dataset = list()
-            for game in self.__games:
-                if game.publisher.publisher_name == selected_publisher:
-                    games_dataset.append(game)
-        return games_dataset
-
     def get_games_by_search(self, search_category='title', search_term=''):
         games_dataset = list()
 

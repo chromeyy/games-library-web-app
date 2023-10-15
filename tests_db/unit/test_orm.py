@@ -173,6 +173,7 @@ def test_saving_favourite(empty_session):
 def insert_favourite(empty_session, values=None):
     pass
 
+
 def test_loading_favourite(empty_session):
     pass
 
