@@ -170,10 +170,11 @@ def test_saving_favourite(empty_session):
     assert rows == [(game.game_id,)]
 
 
-# def insert_favourite(empty_session, values=None):
+def insert_favourite(empty_session, values=None):
+    pass
 
-
-# def test_loading_favourite(empty_session):
+def test_loading_favourite(empty_session):
+    pass
 
 
 # GAME
@@ -265,4 +266,5 @@ def test_saving_game_with_genre(empty_session):
     rows = list(empty_session.execute('SELECT game_id, genre_name FROM game_genres'))
     assert rows == [(new_id, "testGenre",)]
 
-# def test_loading_game_with_genre(empty_session):
+def test_loading_game_with_genre(empty_session):
+    pass
