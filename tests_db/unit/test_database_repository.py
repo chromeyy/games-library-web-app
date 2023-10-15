@@ -7,14 +7,14 @@ def test_repository_can_add_a_user(session_factory):
     repo = SqlAlchemyRepository(session_factory)
 
     # create user and add to repo
-    user = User('Dave', '123456789')
+    user = User('dave', '123456789')
     repo.add_user(user)
 
     # create another and add to repo
-    repo.add_user(User('Martin', '123456789'))
+    repo.add_user(User('martin', '123456789'))
 
     # get user from repo
-    user2 = repo.get_user('Dave')
+    user2 = repo.get_user('dave')
 
     # check user from repo is user added
     assert user2 == user and user2 is user
