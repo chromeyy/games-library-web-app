@@ -185,10 +185,9 @@ def insert_game(empty_session, values=None):
     price = float(5)
     description = "test desc"
     image_url = "url"
-    publisher = Publisher("testPub")
-    genre = Genre('test_genre')
+    publisher = "testPub"
 
-    if value is not None:
+    if values is not None:
         game_id = values[0]
         game_title = values[1]
         release_date = values[2]
@@ -197,12 +196,13 @@ def insert_game(empty_session, values=None):
         image_url = values[5]
         publisher = values[6]
 
-    empty_session.execute('INSERT INTO games (game_id, game_title, game_price, release_date, game_description,'
-                          'game_image_url, publisher_name) VALUES (:game_id, :game_title, :game_price, :release_date, '
+    empty_session.execute('INSERT INTO games (game_id, game_title, game_price, release_date, '
+                          'game_description, game_image_url, publisher_name) '
+                          'VALUES (:game_id, :game_title, :game_price, :release_date, '
                           ':game_description, :game_image_url, :publisher_name)',
                           {'game_id': game_id, 'game_title': game_title, 'game_price': price, 'release_date': release_date,
                            'game_description': description, 'game_image_url': image_url, 'publisher_name': publisher})
-    row = empty_session.execute('SELECT game_id from games where game_title = :game_title',
+    row = empty_session.execute('SELECT game_title from games where game_title = :game_title',
                                 {'game_title': game_title}).fetchone()
     return row[0]
 
@@ -232,12 +232,18 @@ def test_loading_game(empty_session):
     price = float(5)
     description = "test desc"
     image_url = "url"
-    publisher = Publisher("testPub")
-    genre = Genre('test_genre')
+    publisher = "testPub"
 
-    insert_game(empty_session, (empty_session, game_id, game_title, release_date, price, description, image_url, publisher, genre))
-    expected = ["test_game"]
-    assert empty_session.query(Genre).all() == expected
+    game = Game(game_id, game_title)
+    game.price = price
+    game.release_date = release_date
+    game.description = description
+    game.image_url = image_url
+    game.publisher = Publisher(publisher)
+
+    insert_game(empty_session, (game_id, game_title, release_date, price, description, image_url, publisher))
+    expected = [game]
+    assert empty_session.query(Game).all() == expected
 
 
 def test_saving_game_with_genre(empty_session):
