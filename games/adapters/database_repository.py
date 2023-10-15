@@ -68,9 +68,9 @@ class SqlAlchemyRepository(abstract_repo.AbstractRepository):
             return games
 
     def get_games_by_publisher(self, selected_publisher='all'):
-        pass
+        return []
 
-    def get_games_by_search(self, search_category='title', search_term=''):
+    def get_games_by_search(self, search_category='Title', search_term=''):
         games = list()
 
         def get_games_by_fetched_ids(ids):

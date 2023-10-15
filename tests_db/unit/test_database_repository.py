@@ -31,33 +31,22 @@ def test_repository_does_not_retrieve_a_non_existent_user(session_factory):
 
 
 # REVIEW TESTS
-def test_repository_can_add_review(session_factory):
+def test_repository_can_get_add_review(session_factory):
     repo = SqlAlchemyRepository(session_factory)
 
     reviews = repo.get_reviews()
     assert len(reviews) == 3
 
-    test_user = User('test', 'test_password')
+    test_user = repo.get_user('tom')
     test_game = repo.get_game_by_id(7940)
     review = Review(test_user, test_game, 1, "test_comment")
     repo.add_review(review)
 
-    assert len(reviews) == 4
-    # assert repo.get_user('test').reviews == [review]
-
-
-def test_repository_can_get_reviews(session_factory):
-    repo = SqlAlchemyRepository(session_factory)
     reviews = repo.get_reviews()
-    # TODO assert len(reviews) == TO DO
 
-
-def test_repository_game_has_review(session_factory):
-    pass
-
-
-def test_repository_user_has_review(session_factory):
-    pass
+    assert len(reviews) == 4
+    assert test_user.reviews[-1] == review
+    assert test_game.reviews[-1] == review
 
 
 # GAME TESTS
@@ -65,25 +54,29 @@ def test_repository_can_add_game(session_factory):
     repo = SqlAlchemyRepository(session_factory)
 
     game = Game(80085, 'test_game')
-    repo.add_games(game)
+    game.release_date = "Oct 18, 2003"
+    game.price = float(5)
+    game.description = "test desc"
+    game.image_url = "url"
+    publisher = Publisher("testPub")
+    game.publisher = publisher
+    genre = Genre("testGenre")
+    game.add_genre(genre)
 
-    game2 = Game(80086, 'test_game_2')
-    repo.add_games(game2)
+    repo.add_games(game)
 
     assert repo.get_game_by_id(80085) == game
 
 
 def test_repository_does_not_get_a_non_existent_game(session_factory):
-    pass
+    repo = SqlAlchemyRepository(session_factory)
+    assert repo.get_game_by_id(666999) is None
 
 
 def test_repository_can_get_games_by_ids(session_factory):
     repo = SqlAlchemyRepository(session_factory)
 
-    game = Game(80085, 'test_game')
-    repo.add_games(game)
-
-    assert repo.get_game_by_id(80085) == game
+    assert repo.get_game_by_id(267360).title == 'MURI'
 
 
 def test_repository_does_not_get_games_for_non_existent_id(session_factory):
@@ -95,82 +88,28 @@ def test_repository_does_not_get_games_for_non_existent_id(session_factory):
 def test_repository_can_get_games_by_genre(session_factory):
     repo = SqlAlchemyRepository(session_factory)
 
-    game = Game(80085, 'test_game')
-    game.add_genre(Genre('Horror'))
-    repo.add_games(game)
-
-
-    assert game in repo.get_games_by_genre('Horror')
-
-
-def test_repository_returns_an_empty_list_for_non_existent_genre(session_factory):
-    repo = SqlAlchemyRepository(session_factory)
-    games_list = repo.get_games_by_genre('test_fake_genre12345')
-    assert games_list is None
-
-
-def test_repository_can_get_games_by_publisher(session_factory):
-    repo = SqlAlchemyRepository(session_factory)
-
-    game = Game(80085, 'test_game')
-    game.publisher = (Publisher('test_publisher'))
-    repo.add_games(game)
-
-    assert game in repo.get_games_by_publisher('test_publisher')
-
-
-def test_repository_returns_an_empty_list_for_non_existent_publisher(session_factory):
-    repo = SqlAlchemyRepository(session_factory)
-    games_list = repo.get_games_by_publisher('test_fake_publisher12345')
-    assert games_list is None
+    assert len(repo.get_games_by_genre('RPG')) == 131
+    assert len(repo.get_games_by_genre('fake')) == 0
+    assert repo.get_game_by_id(7940) in repo.get_games_by_genre('Action')
 
 
 def test_repository_can_get_games_by_search(session_factory): # TO DO
     repo = SqlAlchemyRepository(session_factory)
+    game = repo.get_game_by_id(7940)
 
-    game = Game(80085, 'test_game')
-    repo.add_games(game)
-
-    assert game in repo.get_games_by_search('test_game')
-
-
-def test_repository_returns_an_empty_list_for_non_existent_search(session_factory): # TO DO
-    repo = SqlAlchemyRepository(session_factory)
-    games_list = repo.get_games_by_search('test_fake_game12345')
-    assert games_list is None
+    assert game in repo.get_games_by_search("Title", "call")
+    assert game in repo.get_games_by_search("Publisher", "Act")
+    assert len(repo.get_games_by_search("Title", "the")) == 107
+    assert len(repo.get_games_by_search("Genre", "RPG")) == 131
+    assert len(repo.get_games_by_search("Publisher", "ac")) == 60
+    assert len(repo.get_games_by_search("Publisher", "does-not-exist")) == 0
 
 
 # GENRE TESTS
-def test_repository_can_add_a_genre(session_factory): # CHECK
+def test_repository_can_get_list_of_genres(session_factory):
     repo = SqlAlchemyRepository(session_factory)
-    game = Game(80085, 'test_game')
-    repo.add_games(game)
 
-    genre2 = Genre('test2')
-    game.add_genre(genre2)
+    assert len(repo.get_list_of_genres()) == 24
 
-    genres = game.genres
-
-    assert genre2 is Genre and genre2 == game.genres[1]
-
-
-def test_repository_can_get_a_genre(session_factory):
-    repo = SqlAlchemyRepository(session_factory)
-    game = Game(80085, 'test_game')
-    repo.add_games(game)
-
-    genre1 = Genre('test1')
-    game.add_genre(genre1)
-
-    assert game.genres[0] == genre1 and game.genres[0] is Genre
-
-
-def test_repository_can_get_list_of_genres(session_factory): # CHECK
-    repo = SqlAlchemyRepository(session_factory)
-    game = Game(80085, 'test_game')
-    repo.add_games(game)
-
-    genre1 = Genre('test1')
-    game.add_genre(genre1)
-
-    assert len(game.genres[0]) == 1
+    repo.add_genre(Genre("test_genre"))
+    assert len(repo.get_list_of_genres()) == 25
