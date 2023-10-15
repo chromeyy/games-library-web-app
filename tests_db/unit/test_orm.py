@@ -15,9 +15,9 @@ def insert_user(current_session, values=None):
         new_password = values[1]
 
     current_session.execute('INSERT INTO users (username, password) VALUES (:username, :password)',
-                          {'username': new_name, 'password': new_password})
+                            {'username': new_name, 'password': new_password})
     row = current_session.execute('SELECT user_id from users where username = :username',
-                                {'username': new_name}).fetchone()
+                                  {'username': new_name}).fetchone()
     return row[0]
 
 
@@ -56,7 +56,6 @@ def insert_genre(empty_session, value=None):
     row = empty_session.execute('SELECT genre_name from genres where genre_name = :genre_name',
                                 {'genre_name': new_genre}).fetchone()
     return row[0]
-
 
 
 def test_saving_genre(empty_session):
@@ -99,14 +98,14 @@ def insert_review(current_session, values=None):
     print(new_user, new_game_id, new_rating, new_comment)
 
     user_id = current_session.execute('SELECT user_id FROM users WHERE username LIKE :username',
-                                    {'username': new_user.username}).fetchone()
+                                      {'username': new_user.username}).fetchone()
 
     current_session.execute('INSERT INTO reviews (game_id, user_id, review_text, rating) VALUES '
-                          '(:game_id, :user_id, :review_text, :rating)',
-                          {'game_id': new_game_id, 'user_id': user_id[0], 'review_text': new_comment,
-                           'rating': new_rating})
+                            '(:game_id, :user_id, :review_text, :rating)',
+                            {'game_id': new_game_id, 'user_id': user_id[0], 'review_text': new_comment,
+                             'rating': new_rating})
     row = current_session.execute('SELECT rating FROM reviews Where review_text = :review_text',
-                                {'review_text': new_comment}).fetchone()
+                                  {'review_text': new_comment}).fetchone()
     return row[0]
 
 
@@ -150,6 +149,7 @@ def test_loading_review(empty_session):
 
     insert_review(empty_session, (user, game, 5, "great!"))  # adding a new review
     insert_review(empty_session, (user2, game, 3, "not so amazing"))  # adding a second new review
+
     expected = [
         Review(user, game, 5, "great!"),
         Review(user2, game, 3, "not so amazing")
@@ -206,13 +206,50 @@ def insert_game(current_session, values=None):
         publisher = values[6]
 
     current_session.execute('INSERT INTO games (game_id, game_title, game_price, release_date, '
-                          'game_description, game_image_url, publisher_name) '
-                          'VALUES (:game_id, :game_title, :game_price, :release_date, '
-                          ':game_description, :game_image_url, :publisher_name)',
-                          {'game_id': game_id, 'game_title': game_title, 'game_price': price, 'release_date': release_date,
-                           'game_description': description, 'game_image_url': image_url, 'publisher_name': publisher})
+                            'game_description, game_image_url, publisher_name) '
+                            'VALUES (:game_id, :game_title, :game_price, :release_date, '
+                            ':game_description, :game_image_url, :publisher_name)',
+                            {'game_id': game_id, 'game_title': game_title, 'game_price': price,
+                             'release_date': release_date,
+                             'game_description': description, 'game_image_url': image_url, 'publisher_name': publisher})
     row = current_session.execute('SELECT game_title from games where game_title = :game_title',
-                                {'game_title': game_title}).fetchone()
+                                  {'game_title': game_title}).fetchone()
+    return row[0]
+
+
+def insert_game_with_genre(current_session, values=None):
+    game_id = 80086
+    game_title = "test_game"
+    release_date = "Oct 18, 2003"
+    price = float(5)
+    description = "test desc"
+    image_url = "url"
+    publisher = "testPub"
+    genre_name = "genre"
+
+    if values is not None:
+        game_id = values[0]
+        game_title = values[1]
+        release_date = values[2]
+        price = values[3]
+        description = values[4]
+        image_url = values[5]
+        publisher = values[6]
+        genre_name = values[7]
+
+    current_session.execute('INSERT INTO games (game_id, game_title, game_price, release_date, '
+                            'game_description, game_image_url, publisher_name) '
+                            'VALUES (:game_id, :game_title, :game_price, :release_date, '
+                            ':game_description, :game_image_url, :publisher_name)',
+                            {'game_id': game_id, 'game_title': game_title, 'game_price': price,
+                             'release_date': release_date,
+                             'game_description': description, 'game_image_url': image_url, 'publisher_name': publisher})
+
+    current_session.execute('INSERT INTO game_genres (game_id, genre_name) VALUES (:game_id, :genre_name)',
+                            {'game_id': game_id, 'genre_name': genre_name})
+
+    row = current_session.execute('SELECT game_id from game_genres where genre_name = :genre_name',
+                                  {'genre_name': genre_name}).fetchone()
     return row[0]
 
 
@@ -274,5 +311,26 @@ def test_saving_game_with_genre(empty_session):
     rows = list(empty_session.execute('SELECT game_id, genre_name FROM game_genres'))
     assert rows == [(new_id, "testGenre",)]
 
+
 def test_loading_game_with_genre(empty_session):
-    pass
+    game_id = 80086
+    game_title = "test_game"
+    release_date = "Oct 18, 2003"
+    price = float(5)
+    description = "test desc"
+    image_url = "url"
+    publisher = "testPub"
+    genre_name = 'genre'
+
+    game = Game(game_id, game_title)
+    game.price = price
+    game.release_date = release_date
+    game.description = description
+    game.image_url = image_url
+    game.publisher = Publisher(publisher)
+    game.add_genre(Genre(genre_name))
+
+    insert_game_with_genre(empty_session,(game_id, game_title, release_date, price, description, image_url, publisher, genre_name))
+
+    expected = [game]
+    assert empty_session.query(Game).all() == expected
