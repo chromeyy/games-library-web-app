@@ -190,7 +190,6 @@ def insert_favourite(current_session, values=None):
                             {'game_id': new_game_id, 'user_id': user_id[0]})
     row = current_session.execute('SELECT game_id FROM favourites Where user_id = :user_id',
                                   {'user_id': user_id[0]}).fetchall()
-    row = [item[0] for item in row]
     return row
 
 
@@ -228,7 +227,6 @@ def test_loading_favourite(empty_session):
     game_ids = empty_session.execute('SELECT game_id FROM favourites WHERE user_id = :user_id',
                                                {'user_id': user_id}).fetchall()
     game_ids = [item[0] for item in game_ids]
-    print(game_ids)
 
     expected = [game, game2]
 
