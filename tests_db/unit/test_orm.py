@@ -94,9 +94,6 @@ def insert_review(current_session, values=None):
         new_rating = values[2]
         new_comment = values[3]
 
-    print(values)
-    print(new_user, new_game_id, new_rating, new_comment)
-
     user_id = current_session.execute('SELECT user_id FROM users WHERE username LIKE :username',
                                       {'username': new_user.username}).fetchone()
 
@@ -177,12 +174,65 @@ def test_saving_favourite(empty_session):
     assert rows == [(game.game_id,)]
 
 
-def insert_favourite(empty_session, values=None):
-    pass
+def insert_favourite(current_session, values=None):
+    new_user = 80085
+    new_game_id = 80085
+
+    if values is not None:
+        new_user = values[0]
+        new_game_id = values[1].game_id
+
+    user_id = current_session.execute('SELECT user_id FROM users WHERE username LIKE :username',
+                                      {'username': new_user.username}).fetchone()
+
+    current_session.execute('INSERT INTO favourites (game_id, user_id) VALUES '
+                            '(:game_id, :user_id)',
+                            {'game_id': new_game_id, 'user_id': user_id[0]})
+    row = current_session.execute('SELECT game_id FROM favourites Where user_id = :user_id',
+                                  {'user_id': user_id[0]}).fetchall()
+    row = [item[0] for item in row]
+    return row
 
 
 def test_loading_favourite(empty_session):
-    pass
+    favourites = list()
+    game = Game(80086, 'test_game')
+    game.release_date = "Oct 18, 2003"
+    game.price = float(5)
+    game.description = "test desc"
+    game.image_url = "url"
+    publisher = Publisher("testPub")
+    game.publisher = publisher
+    game.add_genre(Genre('test_genre'))
+
+    game2 = Game(80087, 'test_game2')
+    game2.release_date = "Oct 18, 2003"
+    game2.price = float(5)
+    game2.description = "test desc"
+    game2.image_url = "url"
+    publisher = Publisher("testPub")
+    game2.publisher = publisher
+    game2.add_genre(Genre('test_genre'))
+
+    user = User("potatoman", "Potato#1234")
+
+    user_id = insert_user(empty_session, ("potatoman", "Potato#1234"))
+
+    insert_game(empty_session)
+    insert_game(empty_session, (game2.game_id, game2.title, game2.release_date,
+                                game2.price, game2.description, game2.image_url, game2.publisher.publisher_name))
+
+    insert_favourite(empty_session, (user, game))  # adding a new favourite
+    insert_favourite(empty_session, (user, game2))  # adding a second new favourite
+
+    game_ids = empty_session.execute('SELECT game_id FROM favourites WHERE user_id = :user_id',
+                                               {'user_id': user_id}).fetchall()
+    game_ids = [item[0] for item in game_ids]
+    print(game_ids)
+
+    expected = [game, game2]
+
+    assert empty_session.query(Game).filter(Game._Game__game_id.in_(game_ids)).all() == expected
 
 
 # GAME
