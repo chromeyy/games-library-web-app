@@ -6,7 +6,7 @@ from games.domainmodel.model import User, Genre, Review, Game, Publisher
 
 
 # USER
-def insert_user(empty_session, values=None):
+def insert_user(current_session, values=None):
     new_name = "testuser"
     new_password = "test123"
 
@@ -14,9 +14,9 @@ def insert_user(empty_session, values=None):
         new_name = values[0]
         new_password = values[1]
 
-    empty_session.execute('INSERT INTO users (username, password) VALUES (:username, :password)',
+    current_session.execute('INSERT INTO users (username, password) VALUES (:username, :password)',
                           {'username': new_name, 'password': new_password})
-    row = empty_session.execute('SELECT user_id from users where username = :username',
+    row = current_session.execute('SELECT user_id from users where username = :username',
                                 {'username': new_name}).fetchone()
     return row[0]
 
@@ -58,6 +58,7 @@ def insert_genre(empty_session, value=None):
     return row[0]
 
 
+
 def test_saving_genre(empty_session):
     genre = Genre("test_genre")
     empty_session.add(genre)
@@ -82,7 +83,7 @@ def test_loading_genre(empty_session):  # keeps failing
 
 
 # REVIEW
-def insert_review(empty_session, values=None):
+def insert_review(current_session, values=None):
     new_user = 80085
     new_game_id = 80085
     new_rating = 5
@@ -94,15 +95,17 @@ def insert_review(empty_session, values=None):
         new_rating = values[2]
         new_comment = values[3]
 
-    user_id = empty_session.execute('SELECT user_id FROM users WHERE username = :username',
+    print(values)
+    print(new_user, new_game_id, new_rating, new_comment)
+
+    user_id = current_session.execute('SELECT user_id FROM users WHERE username LIKE :username',
                                     {'username': new_user.username}).fetchone()
 
-    empty_session.execute('INSERT INTO reviews (game_id, user_id, review_text, rating) VALUES '
+    current_session.execute('INSERT INTO reviews (game_id, user_id, review_text, rating) VALUES '
                           '(:game_id, :user_id, :review_text, :rating)',
-                          {'game_id': new_game_id, 'user_id': user_id, 'review_text': new_comment,
+                          {'game_id': new_game_id, 'user_id': user_id[0], 'review_text': new_comment,
                            'rating': new_rating})
-
-    row = empty_session.execute('SELECT rating FROM reviews Where review_text = :review_text',
+    row = current_session.execute('SELECT rating FROM reviews Where review_text = :review_text',
                                 {'review_text': new_comment}).fetchone()
     return row[0]
 
@@ -137,9 +140,13 @@ def test_loading_review(empty_session):
     game.publisher = publisher
     game.add_genre(Genre('test_genre'))
 
-    user = User("PotatoMan", "Potato#1234")
+    user = User("potatoman", "Potato#1234")
+    user2 = User("totatoman", "Totato#1234")
 
-    user2 = User("TotatoMan", "Totato#1234")
+    insert_user(empty_session, ("potatoman", "Potato#1234"))
+    insert_user(empty_session, ("totatoman", "Totato#1234"))
+
+    insert_game(empty_session)
 
     insert_review(empty_session, (user, game, 5, "great!"))  # adding a new review
     insert_review(empty_session, (user2, game, 3, "not so amazing"))  # adding a second new review
@@ -180,7 +187,7 @@ def test_loading_favourite(empty_session):
 
 # GAME
 
-def insert_game(empty_session, values=None):
+def insert_game(current_session, values=None):
     game_id = 80086
     game_title = "test_game"
     release_date = "Oct 18, 2003"
@@ -198,13 +205,13 @@ def insert_game(empty_session, values=None):
         image_url = values[5]
         publisher = values[6]
 
-    empty_session.execute('INSERT INTO games (game_id, game_title, game_price, release_date, '
+    current_session.execute('INSERT INTO games (game_id, game_title, game_price, release_date, '
                           'game_description, game_image_url, publisher_name) '
                           'VALUES (:game_id, :game_title, :game_price, :release_date, '
                           ':game_description, :game_image_url, :publisher_name)',
                           {'game_id': game_id, 'game_title': game_title, 'game_price': price, 'release_date': release_date,
                            'game_description': description, 'game_image_url': image_url, 'publisher_name': publisher})
-    row = empty_session.execute('SELECT game_title from games where game_title = :game_title',
+    row = current_session.execute('SELECT game_title from games where game_title = :game_title',
                                 {'game_title': game_title}).fetchone()
     return row[0]
 
